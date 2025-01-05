@@ -100,8 +100,11 @@
 </body>
 <script src="fuggvenyek.js"></script>
 <script>
-    window.location.href="test.php";
-    kezdes();
+
+     const xhr= new XMLHttpRequest();
+        xhr.open("GET", "test.php");
+        xhr.send();
+    
     function kezdes(){
         let felasznalonev=localStorage.getItem("felhasznalonev");
         let nev=localStorage.getItem("nev");
