@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Adatlistázás</title>
+    <link rel="stylesheet" href="dizajn.css">
+    <style>
+        .tablasor{
+            border: 1px solid black;
+            padding-top: 40px !important;
+            background-color: #ecf9ff;
+            /*newRow.style.borderColor="solid black";
+                        newRow.style.border="5px solid black";
+                        newRow.style.paddingTop="40px";*/
+        }
+        .inputjobbra{
+            float: right;
+            padding: 5px;
+            font-size: 15px;
+        }
+        .inputjobbrapicike{
+            float: right;
+            padding: 5px;
+            font-size: 15px;
+            width: 200px;
+            }
+        .egyplaceholdermiatt::placeholder{
+            font-size: 13px;
+        }
+        select{
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Adatok kezelése</label>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')">Kezdőlap</a>
+            <a href="gyuruzofuzet.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">Gyűrűzőfüzet</a>
+            <a href="adatok.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" style="padding-left: 30px" >Összes adat</a>
+            <a href="beallitasok.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px; ">Beállítások</a>
+        </div>
+    </div>
+</header>
+
+<!-- -->
+
+
+<body>
+<br>
+
+<div id="exportalasDIV" style="display: none; font-weight: bold; line-height: 15px; margin-top: 1%; background-color: white; width: 300px; margin-left: 37%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 25px">
+    <label style="font-size: 25px; line-height: normal; text-align: center;">Adatok exportálása .xlsx (Excel) formátumba</label><br><br><br>
+    <div style="float: left;margin-left: 15px; "> <label> Dátum<br></label><input style="width: 109px;" type="text" id="datumtol" value="0000.01.01."><label> - </label><input style="width: 108px;" type="text" id="datumig" value="9999.12.31."><br><br></div>
+    <div style="float: left;margin-left: 15px; "> <label> Gyűrűzőhely <br></label><input style="width: 250px;" type="text" id="gyuruzohely" class="egyplaceholdermiatt" placeholder="hagyja üresen az összes megjelenítéséhez"><br><br></div>
+    <div style="float: left;margin-left: 15px; "> <label> Fájl név <br></label><input style="width: 250px;" type="text" id="fajlnev"><br><br></div>
+
+    <button onclick="exportalas(); document.getElementById('exportalasDIV').style.display='none';" 
+    style="float: right; margin: 15px; border-color: blue; color: blue; padding: 5px" id="exportalasOK" onmouseover="kiemelbb('exportalasOK','blue');" onmouseout="visszaemelbb('exportalasOK','blue');">Exportálás</button>
+    <button onclick="document.getElementById('exportalasDIV').style.display='none';" 
+    style="float: left; margin: 15px; border-color: grey; color: grey; padding: 5px" id="exportalasMEGSEM" onmouseover="kiemelbb('exportalasMEGSEM','grey');" onmouseout="visszaemelbb('exportalasMEGSEM','grey');">Mégsem</button>
+    </div>
+
+<div id="visszafogottmadarDIV" style="display: none; line-height: 15px; margin-top: 0.5%; background-color: white; width: 400px; margin-left: 33%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <div style="text-align: center"><label style="font-size: 22px; font-weight: bold">Visszafogott madár adatai</label></div><br><br>
+    <div style="float: left; margin-bottom: 10px;"> <label style="font-size: 15px; font-weight: bold;"> Gyűrűzőhely<label style="color: red;">*</label> <br></label> <select style="width: 220px;" type="text" id="gyuruzohelybox"><option value=""></option></select></div>
+    <div style="float: right;"> <label style="font-size: 15px; font-weight: bold;"> dátum<label style="color: red;">*</label> <br></label> <input style="width: 150px;margin-top: 5px; margin-bottom: 10px;" type="text" id="datumVFM"></div><br>
+    <div style="float: left; margin-bottom: 20px;"> <label style="font-size: 15px; font-weight: bold;"> Gyűrűzőközpont<label style="color: red;">*</label> <br></label> <input style="width: 200px;margin-top: 5px; margin-bottom: 10px;" type="text" id="gyuruzokozpontVFM" value="BELGRADE"></div>
+    <div style="float: right; margin-bottom: 20px;"> <label style="font-size: 15px; font-weight: bold;"> Gyűrű<label style="color: red;">*</label> <br></label> <input style="width: 150px;margin-top: 5px; margin-bottom: 10px;" type="text" id="gyuruVFM"></div><br><br><br>
+    <button onclick="visszafogottmadar()" style="width: 100px; margin-bottom: 3px; padding: 5px; float: right;  border-color: blue; color: blue;" id="visszafogottmadarOK" onmouseover="kiemelbb('visszafogottmadarOK','blue')" onmouseout="visszaemelbb('visszafogottmadarOK','blue')">kész</button>
+    <button onclick="document.getElementById('visszafogottmadarDIV').style.display='none';" style="width: 100px; border-color: grey; color: grey; padding: 5px; float: left;" id="visszafogottmadarMEGSEM" onmouseover="kiemelbb('visszafogottmadarMEGSEM','grey')" onmouseout="visszaemelbb('visszafogottmadarMEGSEM','grey')">mégsem</button>
+</div>
+<div id="visszafogottmadarEREDMENY" style="display: none; line-height: 15px; margin-top: 0.5%; background-color: white; width: 400px; margin-left: 33%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <div style="text-align: center; margin-bottom: 20px;"><label style="font-size: 23px; font-weight: bold">Visszafogott madár gyűrűzési adatai</label></div>
+    <label> Visszafogási index: </label><label type="text" id="visszafogvaVFME"></label><br><br><br><br>
+    <label class="hl" style="font-weight: bold;"> Gyűrű: </label><input class="inputjobbrapicike" type="text" id="gyuruVFME" style="color: black;" disabled><br><br>
+    <label class="hl" style="font-weight: bold;"> Dátum: </label><input class="inputjobbrapicike" type="text" id="datumVFME" style="color: black;" disabled><br><br>
+    <label class="hl" style="font-weight: bold;"> Gyűrűzőhely: </label><input class="inputjobbrapicike" type="text" id="gyuruzohelyVFME" style="color: black;" disabled><br><br>
+    <label class="hl" style="font-weight: bold;"> Ország: </label><input class="inputjobbrapicike" type="text" id="orszagVFME" style="color: black;" disabled><br><br>
+    <label class="hl" style="font-weight: bold;"> Település: </label><input class="inputjobbrapicike" type="text" id="telepulesVFME" style="color: black;" disabled><br><br>
+    <label class="hl" style="font-weight: bold;"> Koordináták: </label><input class="inputjobbrapicike" type="text" id="kkordinatakVFME" style="color: black;" disabled><br><br>
+    <label class="hl" style="font-weight: bold;"> Gyűrűzte: </label><input class="inputjobbrapicike" type="text" id="gyuruzoVFME" style="color: black;" disabled><br><br><br><br>
+
+    
+    <button onclick="document.getElementById('visszafogottmadarEREDMENY').style.display='none';" style="width: 100px; margin-bottom: 3px; padding: 5px; border-color: blue; color: blue;" id="helybevitelkesz" onmouseover="kiemelbb('helybevitelkesz','blue');" onmouseout="visszaemelbb('helybevitelkesz','blue');">OK</button>
+</div>
+
+
+
+<div style="width: 60%; height: 500px; margin-left: 20%; background-color: aliceblue;  display: none;">
+
+
+
+
+
+
+
+    <div style="text-align: center;"><label class="hkiiras" style="font-size: 25px; font-weight: bold;" id="cim">Szűrők</label></div>
+
+        <div style="float: left;margin-left: 10px; "> <label> Dátum <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Gyűrűzőhely <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        <div style="float: left;margin-left: 10px; "> <label> Megjegyzés <br></label> <input style="width: 200px;" type="text" id="megjegyzesBCSbox"></div>
+        
+      </div>
+
+
+
+
+
+<!--<label style="color: red;">*</label>-->
+
+
+
+</div>
+
+<div style="margin-left: 4%; margin-right: 4%; border: 3px solid black ; height: 75px;">
+    <div><button style="float: left; width: 23%; margin: 1%; border-color: blue; color: blue;" id="szurok" onmouseover="kiemelbb('szurok','blue')" onmouseout="visszaemelbb('szurok','blue')"
+        onclick="kiiras('Ez a funkció jelenleg nem elérhető!','lightblue', '5px solid blue', 3000)">Szűrők beállítása</button></div>
+    <div><button style="float: left; width: 23%; margin: 1%; border-color: blue; color: blue;" id="modositas" onmouseover="kiemelbb('modositas','blue')" onmouseout="visszaemelbb('modositas','blue')"
+        onclick="document.getElementById('adatmodositasdiv').style.display='block';">Adat módosítása</button></div>
+    <div><button style="float: left; width: 23%; margin: 1%; border-color: blue; color: blue;" id="visszafogottmadar" onmouseover="kiemelbb('visszafogottmadar','blue')" onmouseout="visszaemelbb('visszafogottmadar','blue')"
+        onclick="document.getElementById('visszafogottmadarDIV').style.display='block';">Visszafogott madár adatai</button></div>
+    <div><button style="float: left; width: 23%; margin: 1%; border-color: blue; color: blue;" id="exportalas" onmouseover="kiemelbb('exportalas','blue')" onmouseout="visszaemelbb('exportalas','blue')"
+        onclick="document.getElementById('exportalasDIV').style.display='block';">Adatok exportálása</button></div>
+</div>
+
+
+
+<div style="margin: 4%; margin-top: 25px; float: left; font-size: 20px;">
+    <div style="text-align: center"><label class="hkiiras" style="font-size: 25px; font-weight: bold;" id="cim">Gyűrűzési adatok</label></div>
+
+    <table id="tabla" style="font-size: 15px; border: 1px solid black ;margin-top: 10px; background-color: black; text-align: center;">
+        <tr style="font-size: 15px; background-color: skyblue;">
+            <th style="width: 50px ; border-width: 3px;">szedés</th>
+            <th style="width: 50px;  border-width: 3px;">háló</th>
+            <th style="width: 100px; border-width: 3px;">gyűrű</th>
+            <th style="width: 100px; border-width: 3px;">faj</th>
+            <th style="width: 25px; font-size: 12px;  border-width: 3px;">kor</th>
+            <th style="width: 25px;font-size: 12px;  border-width: 3px; ">ivar</th>
+            <th style="width: 20px; font-size: 9px;  border-width: 3px;">zsír</th>
+            <th style="width: 20px; font-size: 9px;  border-width: 3px;">izom</th>
+            <th style="width: 20px; font-size: 9px;  border-width: 3px;">vedl</th>
+            <th style="width: 20px; font-size: 9px;  border-width: 3px;">kop.</th>
+            <th style="width: 20px; font-size: 9px;  border-width: 3px;">folt</th>
+            <th style="width: 20px; font-size: 9px;  border-width: 3px;">ktf.</th>
+            <th style="width: 50px;  border-width: 3px;">3.ev</th>
+            <th style="width: 50px;  border-width: 3px;">szárny</th>
+            <th style="width: 50px;  border-width: 3px;">farok</th>
+            <th style="width: 50px;  border-width: 3px;">talp</th>
+            <th style="width: 50px;  border-width: 3px;">tömeg</th>
+            <th style="width: 200px;  border-width: 3px;">szárnyformula</th>
+            <th style="width: 410px;  border-width: 3px;">megjegyzés</th>
+        </tr>
+    </table>
+</div>   
+<div id="adatmodositasdiv" style="display: none; font-weight: bold; line-height: 15px; margin-top: 1%; background-color: white; width: 350px; margin-left: 36%; margin-right:40%; border: 5px solid blue; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 25px">
+    <label style="font-size: 20px; line-height: normal;">
+        Jelenleg ez a funkció nem elérhető. <br> Az adatot csak adminisztrátor tudja módosítani. <br> A kérvényt a következő e-mail címre küldje el: sz628540667@gmail.com <br> <br>
+    </label>
+    <button onclick="document.getElementById('adatmodositasdiv').style.display='none';" style="float: left; width: 100px; margin: 10px; border-color: blue; color: blue; padding: 5px" id="pluszadatok" onmouseover="kiemelbb('pluszadatok','blue');" onmouseout="visszaemelbb('pluszadatok','blue');">OK</button>
+    </div>
+<div id="uzi" style="display: none;line-height: 40px; background-color: white; text-align: center; width: 600px;  margin-left: 28%; margin-right:40%; margin-top: 5%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <h1 id="uzikiiratash2"></h1>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+
+
+    let felh=localStorage.getItem("felhasznalonev");
+    if(felh!=='')
+    {
+        osszesadat();
+        helyfrissit();
+
+    }
+    else
+    {
+        window.location.href="index.html";
+        kiiras("Nincs bejelentkezve, így nem fog tudni adatokat listázni. Jelentkezzen be az adatlistázáshoz!", "#ffded4", "7px solid red", 999999);
+    }
+function visszafogottmadar(){
+        let gyuruzokozpont=document.getElementById("gyuruzokozpontVFM").value;
+        let datum=document.getElementById("datumVFM").value;
+        let gyuruzohely=document.getElementById("gyuruzohelybox").value;
+        let gyuru=document.getElementById("gyuruVFM").value;
+        let kuldadatok = "&gyuruzokozpont=" + gyuruzokozpont + "&gyuru=" + gyuru + "&datum=" + datum + "&gyuruzohely=" + gyuruzohely;
+        const xhr=new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let adatok = JSON.parse(xhr.responseText);
+                if (adatok.length===2)
+                {
+                    adatok.forEach(function (adat) {
+
+                    if (adat.index==="gyuruzes")
+                    {
+                        let d = adat.datum+".";
+                        d=d.replace(/-/g, ".");
+                        document.getElementById("gyuruVFME").value=document.getElementById("gyuruzokozpontVFM").value+"_"+adat.gyuru;
+                        document.getElementById("datumVFME").value=d;
+                        document.getElementById("gyuruzohelyVFME").value=adat.gyuruzohely;
+                        document.getElementById("orszagVFME").value=adat.orszag;
+                        document.getElementById("telepulesVFME").value=adat.telepules;
+                        document.getElementById("kkordinatakVFME").value=adat.Nkoordinata+", "+adat.Skoordinata;
+                        document.getElementById("gyuruzoVFME").value=adat.gyuruzo;
+                        document.getElementById("visszafogottmadarDIV").style.display="none";
+                        document.getElementById("visszafogottmadarEREDMENY").style.display="block";
+
+                    }
+                    else{
+                        document.getElementById("visszafogvaVFME").textContent=adat.index;
+                    }
+
+                });
+                }
+                else
+                {
+                    kiiras("Nem található a gyűrűzési vagy/és a visszafogási adat!", "#ffded4", "7px solid red", 3000);
+                }
+                
+
+            }
+            else
+            {
+                alert("Hiba az adatbázishoz való kapcsolódás közben!");
+            }
+        }
+        xhr.open("GET", "gyuruzofuzet.php?task=VFM"+kuldadatok);
+        xhr.send();
+}
+
+    function osszesadat (){
+        let x=true;
+        let gyuruzohely;
+        tabla=document.getElementById("tabla");
+        while (tabla.rows.length > 1) {
+            tabla.deleteRow(1);
+        }
+        const xhr=new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let tabla= document.getElementById("tabla");
+                let adatok = JSON.parse(xhr.responseText);
+
+                adatok.forEach(
+                    function (adat)
+                    {
+                        if (x){datum=adat.datum;x=false;}
+                        if (adat.datum!=datum){
+                            let datRow = tabla.insertRow(1);
+                            datRow.classList.add("tablasor");
+                            let cell1= datRow.insertCell(0);
+                            cell1.colSpan=19;
+                            let d = datum+".";
+                            d=d.replace(/-/g, ".");
+                            cell1.innerHTML =adat.gyuruzohely + " - " + d;
+                            datRow.style.backgroundColor="aqua";
+                            datum=adat.datum;
+                        }
+                        let newRow = tabla.insertRow(1);
+                        let szedes=adat.szedes.substring(0,5);
+                        newRow.classList.add("tablasor");
+                        newRow.insertCell(0).innerHTML = szedes;
+                        newRow.insertCell(1).innerHTML = adat.halo;                        
+                        let gyurucell = newRow.insertCell(2);
+                        gyurucell.innerHTML = adat.gyuru;
+                        newRow.insertCell(3).innerHTML = adat.faj;
+                        newRow.insertCell(4).innerHTML = adat.kor;
+                        newRow.insertCell(5).innerHTML = adat.ivar;
+                        newRow.insertCell(6).innerHTML = adat.zsir;
+                        newRow.insertCell(7).innerHTML = adat.izom;
+                        newRow.insertCell(8).innerHTML = adat.vedles;
+                        newRow.insertCell(9).innerHTML = adat.kopas;
+                        newRow.insertCell(10).innerHTML = adat.folt;
+                        newRow.insertCell(11).innerHTML = adat.kotlofolt;
+                        newRow.insertCell(12).innerHTML = adat.harmadikevezo;
+                        newRow.insertCell(13).innerHTML = adat.szarny;
+                        newRow.insertCell(14).innerHTML = adat.farok;
+                        newRow.insertCell(15).innerHTML = adat.farok;
+                        newRow.insertCell(16).innerHTML = adat.tomeg;
+                        newRow.insertCell(17).innerHTML = adat.szarnyformula;
+                        newRow.insertCell(18).innerHTML = adat.megjegyzes;
+                        //tabla.innerHTML=newRow;
+                        newRow.style.backgroundColor="white";
+                        if (adat.adat==="visszafogas" || adat.adat==="kulfoldi") {gyurucell.style.fontWeight="800";}
+                        if (adat.adat==="kulfoldi") {newRow.style.backgroundColor="yellow";}
+                        gyuruzohely=adat.gyuruzohely;
+                    }
+                )
+                            let datRow = tabla.insertRow(1);
+                            datRow.classList.add("tablasor");
+                            let cell1= datRow.insertCell(0);
+                            cell1.colSpan=19    ;
+                            let d = datum+".";
+                            d=d.replace(/-/g, ".");
+                            cell1.innerHTML =gyuruzohely + " - " + d;
+                            datRow.style.backgroundColor="aqua";
+
+            }
+            else
+            {
+                alert("Hiba az eredménytáblázat megjelenítése közben!");
+            }
+        }
+        xhr.open("GET", "gyuruzofuzet.php?&task=L");
+        xhr.send();
+    }
+    function listazas(){
+    document.getElementById("tablaaaa").style.border="3px solid black";
+        let dattol=document.getElementById("dattol").value;
+        let datig=document.getElementById("datig").value;
+        let gyurutip=document.getElementById("gyurutip").value;
+        let helyfels=document.getElementById("helyfels").value;
+        let elsoevezo=document.getElementById("elsoevezo").value;
+        let tomeg=document.getElementById("tomeg").value;
+        let zsir=document.getElementById("zsir").value;
+        let izom=document.getElementById("izom").value;
+        let vedles=document.getElementById("vedles").value;
+        let egyY=document.getElementById("egyY").checked;
+        let egyplusz=document.getElementById("egyplusz").checked;
+        let fejltt=document.getElementById("fejltt").checked;
+        let R=document.getElementById("R").checked;
+        let him=document.getElementById("him").checked;
+        let tojo=document.getElementById("tojo").checked;
+        let ismeretlen=document.getElementById("ismeretlen").checked;
+        //---------
+        tabla=document.getElementById("tabla");
+        while (tabla.rows.length > 1) {
+            tabla.deleteRow(1);
+        }
+
+        let gyuru = document.getElementById("gyuru").value;
+        let kuldadatok = "dattol=" + dattol + "&datig=" + datig + "&gyurutip=" + gyurutip + "&helyfels=" + helyfels + "&elsoevezo=" + elsoevezo + "&tomeg=" + tomeg + "&zsir=" + zsir + "&izom=" + izom + "&vedles=" + vedles + "&egyY=" + egyY + "&egyplusz=" + egyplusz + "&fejltt=" + fejltt + "&R=" + R + "&him=" + him + "&tojo=" + tojo + "&ismeretlen=" + ismeretlen + "&index=" + index + "&gyuru=" + gyuru;
+        const xhr=new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let tabla= document.getElementById("tabla");
+
+                let adatok = JSON.parse(xhr.responseText);
+                adatok.forEach(
+                    function (adat)
+                    {/*
+                        let newRow = document.createElement("td");
+                        tabla.insertRow();*/
+                        let newRow = tabla.insertRow();
+                        newRow.classList.add("tablasor");
+
+                        newRow.insertCell(0).innerHTML = adat.gyuru;
+                        newRow.insertCell(1).innerHTML = adat.datum;
+                        newRow.insertCell(2).innerHTML = adat.ido;
+                        newRow.insertCell(3).innerHTML = adat.hely;
+                        newRow.insertCell(4).innerHTML = adat.gyuruzo;
+                        newRow.insertCell(5).innerHTML = adat.faj;
+                        newRow.insertCell(6).innerHTML = adat.nem;
+                        newRow.insertCell(7).innerHTML = adat.kor;
+                        newRow.insertCell(8).innerHTML = adat.tomeg;
+                        newRow.insertCell(9).innerHTML = adat.elsoevezo;
+                        newRow.insertCell(10).innerHTML = adat.zsir;
+                        newRow.insertCell(11).innerHTML = adat.izom;
+                        newRow.insertCell(12).innerHTML = adat.vedles;
+                        newRow.insertCell(13).innerHTML = adat.megjegyzes;
+                        //tabla.innerHTML=newRow;
+                    }
+                )
+                document.getElementById("col1").style.width="100px";
+                document.getElementById("col1").style.width="100px";
+                document.getElementById("col3").style.width="100px";
+                document.getElementById("col4").style.width="100px";
+                document.getElementById("col5").style.width="100px";
+                document.getElementById("col6").style.width="100px";
+                document.getElementById("col7").style.width="100px";
+                document.getElementById("col8").style.width="100px";
+                document.getElementById("col9").style.width="100px";
+                document.getElementById("col10").style.width="100px";
+                document.getElementById("col11").style.width="100px";
+                document.getElementById("col12").style.width="100px";
+                document.getElementById("col13").style.width="100px";
+                document.getElementById("col14").style.width="100px";
+
+
+            }
+            else
+            {
+                alert("Hiba az eredménytáblázat megjelenítése közben!");
+            }
+        }
+        xhr.open("GET", "listazas.php?"+kuldadatok);
+        xhr.send();
+
+
+
+
+
+    }
+    function modositas() {
+        document.getElementById('helykpbox').value="";
+        document.getElementById('gyuruzobox').value="";
+        document.getElementById('fajbox').value="";
+        document.getElementById('korbox').value="";
+        document.getElementById('nembox').value="";
+        document.getElementById('tomegbox').value="";
+        document.getElementById('elsoevezobox').value="";
+        document.getElementById('zsirbox').value="";
+        document.getElementById('izombox').value="";
+        document.getElementById('vedlesbox').value="";
+        document.getElementById('megjegyzesbox').value="";
+        const xhr = new XMLHttpRequest();
+        xhr.onload=function () {
+            if (xhr.status===200)
+            {
+                let adat = JSON.parse(xhr.responseText);
+
+                document.getElementById('gyurutbox').value=adat.gyuru;
+
+                if (document.getElementById("gyurutbox").value==="undefined")
+                {
+                    alert("A megadott gyűrűszám nem létezik az adatbázisban!");
+                    document.getElementById("felugroablak").style.display="none";
+                }
+                else {
+                    document.getElementById('helykpbox').value=adat.hely;
+                    document.getElementById('gyuruzobox').value=adat.gyuruzo;
+                    document.getElementById('fajbox').value=adat.faj;
+                    document.getElementById('korbox').value=adat.kor;
+                    document.getElementById('nembox').value=adat.nem;
+                    document.getElementById('tomegbox').value=adat.tomeg;
+                    document.getElementById('elsoevezobox').value=adat.elsoevezo;
+                    document.getElementById('zsirbox').value=adat.zsir;
+                    document.getElementById('izombox').value=adat.izom;
+                    document.getElementById('vedlesbox').value=adat.vedles;
+                    document.getElementById('megjegyzesbox').value=adat.megjegyzes;
+                    document.getElementById("felugroablak").style.display="block";
+                }
+
+
+            }
+            else
+            {
+                alert("Hiba az adat lekérése közben!");
+                document.getElementById("felugroablak").style.display="none";
+            }
+        }
+        xhr.open("GET", "adatleker.php?gyuru="+document.getElementById("gyuru").value);
+        xhr.send();
+    }
+    function adatmodosit() {
+        document.getElementById("felugroablak").style.display="none";
+        let adatok="gyurutbox=" + document.getElementById("gyurutbox").value +
+            "&fajbox=" + document.getElementById("fajbox").value +
+            "&nembox=" + document.getElementById("nembox").value +
+            "&korbox=" + document.getElementById("korbox").value +
+            "&megjegyzesbox=" + document.getElementById("megjegyzesbox").value +
+            "&tomegbox=" + document.getElementById("tomegbox").value +
+            "&elsoevezobox=" + document.getElementById("elsoevezobox").value +
+            "&zsirbox=" + document.getElementById("zsirbox").value +
+            "&izombox=" + document.getElementById("izombox").value +
+            "&vedlesbox=" + document.getElementById("vedlesbox").value +
+            "&helykpbox=" + document.getElementById("helykpbox").value +
+            "&gyuruzobox=" + document.getElementById("gyuruzobox").value;
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function (){
+            if (xhr.status===200)
+            {
+                if (JSON.parse(xhr.responseText)){
+                    alert("Sikeres adatmódosítás!");
+                }
+                else {
+                    alert("Hiba az adat módosítása közben!");
+                }
+            }
+            else
+            {
+                alert("Hiba az adatbázishoz való kapcsolódás közben!");
+            }
+        }
+        xhr.open("GET", "adatmodosit.php?"+adatok);
+        xhr.send();
+
+    }
+    function exportalas(){
+        try{
+            let dattol=document.getElementById("datumtol").value;
+        let datig=document.getElementById("datumig").value;
+        let gyuruzohely=document.getElementById("gyuruzohely").value;
+        let fajlnev=document.getElementById("fajlnev").value;
+        let kuldadatok = "&dattol=" + dattol + "&datig=" + datig + "&gyuruzohely=" + gyuruzohely;
+        const xhr=new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let adatok = JSON.parse(xhr.responseText);
+                let data = [["adat", "szedés", "háló", "gyűrűzőközpont", "gyűrű", "faj", "kor", "ivar", "zsír", "izom", "vedlés", "kopás", "kotlófolt", "folt", "harmadikevező", "szárny", "farok", "talp", "tömeg", "szárnyformula", "megjegyzés", "gyűrűzés után", "madár állapota", "befogás", "csali", "megjegyzésBCS", "dátum", "gyűrűzőhely", "koordináta", "gyűrűző"]];
+                adatok.forEach(function (adat) {
+                    data.push([
+                        adat.adat,
+                        adat.szedes,
+                        adat.halo,
+                        adat.gyuruzokozpont,
+                        adat.gyuru,
+                        adat.faj,
+                        adat.kor,
+                        adat.ivar,
+                        adat.zsir,
+                        adat.izom,
+                        adat.vedles,
+                        adat.kopas,
+                        adat.kotlofolt,
+                        adat.folt,
+                        adat.harmadikevezo,
+                        adat.szarny,
+                        adat.farok,
+                        adat.talp,
+                        adat.tomeg,
+                        adat.szarnyformula,
+                        adat.megjegyzes,
+                        adat.gyuruzesutan,
+                        adat.madarallapota,
+                        adat.befogas,
+                        adat.csali,
+                        adat.megjegyzesBCS,
+                        adat.datum,
+                        adat.gyuruzohely,
+                        adat.Nkoordinata + ", " + adat.Skoordinata,
+                        adat.gyuruzo
+                    ]);
+                });
+
+                let fajlnev=document.getElementById("fajlnev").value;
+                if (fajlnev===""){
+                    fajlnev="EXPORT_"+getFormattedDate();
+                }
+                if (!fajlnev.endsWith(".xlsx")) {
+                    fajlnev += ".xlsx";
+                }   
+                const worksheet = XLSX.utils.aoa_to_sheet(data);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Adatok");
+                XLSX.writeFile(workbook, fajlnev);
+                kiiras("Sikeres exportálás","lightgreen", "5px solid green", 3000);
+            }
+            else
+            {
+                alert("Hiba az adatbázishoz való kapcsolódás közben!");
+            }
+        }
+        xhr.open("GET", "gyuruzofuzet.php?task=EA"+kuldadatok);
+        xhr.send();
+        }
+        catch(error){
+            kiiras('Hiba az adatok exportálása közben','#ffded4', '5px solid red', 3000);
+        }
+
+
+       
+    }
+    function exportToCsv(filename, csvData) {
+        var csvContent = "data:text/csv;charset=utf-8," + csvData;
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+    }
+    function helyfrissit(){
+        let select = document.getElementById('gyuruzohelybox');
+        let optionsLength = select.options.length;
+        for (let i = optionsLength - 1; i >= 0; i--) {
+        select.remove(i);
+        }/*
+        let select2 = document.getElementById('gyuruzohely2box');
+        let optionsLength2 = select2.options.length;
+        for (let i = optionsLength2 - 1; i >= 0; i--) {
+        select2.remove(i);
+        }*/
+
+
+        const lista = document.getElementById("gyuruzohelybox");
+       // const lista2 = document.getElementById("gyuruzohely2box");
+        const option0 = document.createElement("option");
+      //  const option02 = document.createElement("option");
+        lista.appendChild(option0);
+      //  lista2.appendChild(option02);
+        const xhr=new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let adatok = JSON.parse(xhr.responseText);
+                adatok.forEach(
+                    function (adat){
+                        const option = document.createElement("option");
+                        option.value = adat.elnevezes;
+                        option.text = adat.elnevezes;
+               //         const option2 = document.createElement("option");
+                //        option2.value = adat.elnevezes;
+               //         option2.text = adat.elnevezes;
+                        lista.appendChild(option);
+                //        lista2.appendChild(option2);
+
+                    }
+                )
+            }
+            else {alert("Hiba az gyűrűzőhelyek betöltése közben!");}
+        }
+        xhr.open("GET", "gyuruzofuzet.php?task=HeL");
+        xhr.send();
+    }
+    function kiiras(szoveg,hatter,korvonal,ido)
+    {
+        document.getElementById("uzi").style.display="block";
+        let div = document.getElementById("uzi");
+        let h2 = document.getElementById("uzikiiratash2");
+        div.style.border=korvonal;
+        div.style.backgroundColor=hatter;
+        h2.textContent=szoveg;
+        setTimeout(function (){document.getElementById("uzi").style.display="none"},ido);
+    }
+    function kiemel(id,szin) {
+        document.getElementById(id).style.color=szin;
+    }
+    function visszaemel(id,szin) {
+        document.getElementById(id).style.color=szin;
+
+    }
+    function kiemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+    }
+    function visszaemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+
+    }
+    function kiemelbb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+        document.getElementById(id).style.backgroundColor=szin;
+        document.getElementById(id).style.color="white";
+
+    }
+    function visszaemelbb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+        document.getElementById(id).style.backgroundColor="white";
+        document.getElementById(id).style.color=szin;
+
+    }
+    function getFormattedDate() {
+    const now = new Date();
+
+    // Az év, hónap, nap, óra, perc, másodperc lekérése
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');  // A hónap 0-tól kezdődik, ezért +1
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    // Az elkészített dátum- és időformátum
+    return `${year}${month}${day}${hours}${minutes}${seconds}`;
+}
+
+</script>
+</body>
+</html>

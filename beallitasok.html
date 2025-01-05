@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Segítség</title>
+    <link rel="stylesheet" href="dizajn.css">
+    <style>
+    label{
+        font-size: 17px;
+    }
+    </style>
+</head>
+<body>
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Beállítások</label>
+        
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')" style="padding-right: 30px">Kezdőlap</a>
+            <a href="gyuruzofuzet.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" >Gyűrűzőfüzet</a>
+            <a href="adatok.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">összes adat</a>
+            <a href="segitseg.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px">Beállítások</a>
+        </div>
+    </div>
+</header><br><br><br><br><br><br><br><br><br><br><br>
+<div style="width: 100%; text-align: center;">
+    <h1> Ez az oldal jelenleg nem elérhető!</h1>
+
+</div>
+<!--
+<div style="width: 94%; margin: 3%">
+    <h1>Használati útmutató</h1>
+
+    <h2>Kezdőlap, bejelentkezés, regisztráció</h2>
+    <label>
+        A kezdőlapon (és az összes többi oldalon), az oldal felső részén található menü-ben, a szövegekre kattintva lehet navigálni a több oldalra.
+        A két fő funkció, az adatbevitel, és az adatlistázás külön gombokkal is elérhető az oldalon.
+        <br><br>A bejelentkezéshez kattinson a menü jobb szélén lévő ikonra, majd a bejelentkezés oldalon írja be a felhasználónevét és a jelszavát.
+        Sikeres bejelentkezéskor az üzenet "ok" gombjára való kattintása után visszanavigál a kezdőlapra, sikertelen bejelntekzéskor marad az oldalon.
+        <br><br>A regisztrációhoz kattintson a "Hozzon létre egyet!" szövegre, és átnavigál a regisztrációs oldalra.
+        Itt ki kell tölteni minden mezőt, és utána a felhsználó visszajelzést kap. Ha sikeres, akkor visszanavigál a bejelentkezésre, ahol újra be kell jelentkezni.
+        Itt is vissza lehet manuálisan lépni a bejelentkezéshez, a "Jelentkezzen be!" szöbegre kattintva.
+        <br><br>Ha be van a felhasználó jelentkezve, akkor a menüben a jobb oldani ikon mellett megjelenik a felhasználóneve.
+        A kijelentkezéshez kattintson az ikonra, és rögtön kijelentkezik. Amennyiben nincs bejelnetkezve a felhasználó, akkor a fő funkciók (adatbevitel, adatlistázás)
+        nem elérhetőek, hibaüzenet fog megjelenni.
+    </label>
+    <h2>Adatbevitel beszédfelismeréssel</h2>
+    <div style="width: 350px; float: right"><img src="a-human-entry-data-about-birds-with-voice-with-mic(1).jpg" alt=""></div>
+
+    <label>
+        A beszédfelismeréses adatbevitelnél fontos szerepet játszanak az kulcsszavak, amik megadják, hogy mit kell végrehajtani.
+        Egy utasítás így néz ki: [nyitó kulcsszó][információ][záró kulcsszó] (pl.: ["gyűrű" "b104569" "tovább"] vagy ["adatbevitel" "tovább"].
+        Információt
+        csak az adatbevitelnél (beviteli mezőkbe) kell felmondani, a funkcióknál erre nincs
+        szükség. Az információ ebben esetben a beviteli adat, tehát amit terepen a gyűrűző
+        meghatároz és felmond.
+        Funkciók: <br><br>adatbevitel - adatok mentése az adatbázisba. Nyitó kulcsszó: "adatbevitel". Záró kucslszavak: "igen"/"nem".
+        <br>visszafogás/új gyűrű - váltás az adatbevitel fajtája között. Nyitó kulcsszó: "visszafogás"/"új gyűrű". Záró kulcsszó: nincs.
+        <br>adatvisszatöltés - utoljára bevitt adatok visszatöltése. Nyitó kulcsszó: "vissza". Záró kucslszavak: "igen"/"nem".
+        <br>adattörlés - a beviteli mezők tartalmának mentése ideiglenes adattárolókba, és beviteli mezők tartalmának törlése.
+        Nyitó kulcsszó: "adattörlés". Záró kucslszavak: "igen"/"nem".
+        <br>frissítés - beszédfelismerő újraindítása, aktuális bevitel/végrehajtás megszakítása, felismert szöveg törlése.
+        Nyitó kulcsszó: "frissítés"/"újra"/"töröl". Záró kucslszavak: nincs.
+        <br>gyorsítóadatok - gyűrűsorozatok első számának megadása, és ez úgy használható ki, hogy a gyűrű bevitelénél fel
+        kell mondani a "gyűrű" kulcsszavat, a gyűrűtipust, és a "következő" kulcsszavat, majd a "tovább" kulcsszavat, és autómatikusan kitöltődik a mező a következő gyűrűszámmal.
+         Továbbá megadható tíz madárfaj, aminek a bevitelénél mondani kell a "fajta" kulcsszavat, a "kód" kulcsszavat, majd a számot, amire megadtuk a madár nevét, és etrmészetesen a "tovább" kulcsszóval lezárni az adatot. A gyorsítóadatok módosítása nem elérhető beszédfelismeréssel, hanem csak gomb lenyomásával.
+        <br><br>Az adatok bevitelekor fel kell mondani a beviteli mező feletti szavat (az a kulcsszó), akkor fel kell mondani azadatoat, majd a "tovább" kulcsszóval lezárni az adatot.
+        Tehát ha sémában szeretnénk ábrázolni a beszédfelismeréssel történő adatbevitelt, akkor így nézni ki: [utasítási kulcsszó][szükséges informásiók][záró kulcsszó] (az előtte és utána lévő szövegnek nincs jelentőssége, de ügyelni kell, hogy miközben beszélünk, az alkalmazás felismerhet utasítási kulcsszavat (például ha beszédben elhangzik a "nem" szó, akkor azt kulcsszóként érzékeli, és hibát fog írni a nem beviteli mező helyére. Ennek kiküszöbölésére ajánaltos a frissítés funkciót alkalmazni)).
+        <br>Néhány mezőnek közelezően ki kell hogy legyen töltve, mert anélkül sikertelen lesz az adatbevitel. Sikeres adatbevitel esetén az összes mező tartalma törlédni fog, hogy rögtön lehessen bevitnni a következő adatot.
+        <br>A gyűrű bevitelekor a "gyűrű" kulcsszó kimondása után fel kell mondani a gyűrűtípust, és a számot, valamint lezárni az adatot a "tovább" kulcsszóval.
+        <br>A faj bevitelére több módszer létezik: 1. "fajta" [madárfaj magyar neve] "tovább"; 2. a korábban említett gyorsítóadatos bevitel; 3. Kóddal történő adatbevitel: "fajta" "kód" [madár hatbetűs kódja, és minden karakterre egy szavat mondani (ACRSCH - "alma" "ceruza" "rajz" "szép" "ceruza" "háló")] "tovább".
+        A legutóbbinál semmi jelentőssége nincs a felmondott szavaknak, csak az első betűket veszi figyelembe. 
+        Ezt akkor érdemes alkalmazni, amikor a beszédfelismerő nem érzékeli megfelelően a felmondott adatot.
+        <br>A nem bevitelénél három bevihető adat van: "nem" ["hím"/"tojó"/"ismeretlen"] "tovább". Ha kitöltetlenül marad, akkor "ismeretlen" kerül be az adatbázisba.
+        <br>A kor bevitelénél négy bevihető adat van: "kor" ["első éves"/"adult"/"röpképes"/"fejlett"] "tovább". Ha kitöltetlenül marad, akkor "fejlett" kerül be az adatbázisba.
+        <br>A többinél pedig az előzőköz hasonlóan, az utasítási kulcsszó után mondani kell a megfelelő számadatot, majd a "tovább" kulcsszóval lezárni.
+        <br><br> Az adatbevitelre kattintva megjelenik egy ablak, ahol az adatok vannak feltüntetve, és ott lehet ellenőrizni.
+        itt választható a "mégse" opció is (kulcsszóval is elérhető: "nem").
+        A sikeres adatbevitel után az adatok törlődnek az mezők tartalmai, míg a sikertelennél nem, annak érdekében, hogy ki lehessen javítani.
+        A legutolsó adat (ami a mezőkben volt) ilyenkor elmentődik egy helyi tárolóba, és ezt vissza lehet tölteni egy gombnyomással, vagy beszéddel is.
+        <br>A helyazonosítót csak egyszer kell bevinni, az nem törlődik adatbevtielkor, valamint ezt nem lehet beszédfelismeréssel bevinni.
+        A mellette lévő "+" gombbal hozzá lehet adi helyazonosítót.
+        A gombra kattintva megjelenik egy felugró ablak, ahol bevitlei mezők jelennek meg. Ügyelni kell arra, hogy minden adatot pontosan töltsünk ki.
+
+        A gyűrűző beviteli mező automatikusan kitöltődik az aktuálisan bejelnetkezett szemény nevével, és ezt nem lehet módosítani.
+        <br>A rendszer kiírja a felismert szöveget egyben, és figyelni is lehet arra, hogy az információ helyesen van-e felismerve.
+        A kulcsszavaknál nincs ilyen jellegű probléma, mivel ott azonnali visszajelzést kap a felhasználó, ha érzékeli a rnedszer.
+        A beviteli mezőknél a körvonal vastagabb kékre vált, funkcióknál üzenetet kap a felhasználó, kivéve a frissítés funkciónál, ott azonnal törlődik a felismert szöveg.
+    </label>
+    <h2>Adatlistázás</h2>
+    <div style="width: 350px; float: right"><img src="a-human-list-data-in-excel-to-the-application-for-(1).jpg" alt=""></div>
+
+    <label>
+        Az adatlistázásnál be lehet állítani tíz féle szűrőt. Amelyik szűrőnél nincs semmi megadva, akkor arra az adatra nem lesz korlátozás.
+        Ahol felsorolni kell, ott pontosvesszővel (;) kell elválasztani. Mindegyik beviteli mezőnél van utasítás, hogyan kell bevtinni.
+        Az eredméyntáblázat gomb megnyomásakor megjelneik a táblázat az oldal ajján. Lehet váltani a visszafogási és az általános adatok között.
+        A visszafogásnál meg lehet adni (de nem kötelező) egy gyűrűszámot, ebben az esetben az első sorban megjelenik a gyűrűzési adat, valamint az összes megkerülési adat a továbbikaban.
+        <br><br>Az exportáláshoz be kell írni a megfelelő mezőbe a fájlnevet, majd az exportálás bombot megnyomni, és autómatikusan letölti a .csv fájlt.
+        Az exportálás során újra végrehajtja a rendszer az adatlekérést, csak nem jeleníti meg, tehát, ha a felhasználó kilistázik valamit, és utána állít a szűrőkön, akkor
+        az újonan beállított táblázat fog bekerülni a .csv állományba.
+        <br><br>Az adatok módosítása is ezen az oldalon érhető el. A gyűrűazonosító beviteli mezőbe be kell vinni a gyűrű azonosítóját, és rákattintani az adatmódosítás gombra.
+        Egy felugró ablakon megjelnnek az adatok egy-egy beviteli mezőben, amiket lehet szerkezteni, és az adatmódosítás gombbal el lehet menteni, a mégsem gombbal el lehert véteni a változtatást.
+        <br><br>Az adatlistázásnál semmilyen funkció nem érhető el <beszédfelismeréssel class=""></beszédfelismeréssel>
+    </label>
+
+</div>
+<script>
+
+    let felh=localStorage.getItem("felhasznalonev");
+    if(felh!=='')
+    {
+        document.getElementById("bejgli").textContent = felh;
+        document.getElementById("bejkep").style.border="0px";
+    }
+    else
+    {
+        document.getElementById("bejgli").textContent = "";
+        document.getElementById("bejkep").style.border="2px solid black";
+    }
+</script>-->
+<script src="fuggvenyek.js"></script>
+
+</body>
+</html>

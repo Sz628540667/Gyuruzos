@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Adatbevitel</title>
+    <link rel="stylesheet" href="dizajn.css">
+
+<style>
+        .ua{
+            font-size: 25px;
+        }
+        .hl{
+            font-size: 20px;
+            line-height: 18px;
+        }
+        .inputjobbrapicike{
+            float: right;
+            padding: 5px;
+            font-size: 15px;
+            width: 200px;
+            }
+        select{
+            font-size: 18px;
+    padding: 9px;
+    right: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid #BAD1CD;
+        }
+    </style>
+</head>
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Fészkek, költési adatok</label>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')">Kezdőlap</a>
+            <a href="beallitasok.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px; ">Beállítások</a>
+        </div>
+    </div>
+</header>
+<body id="bodi" >
+    <div id="tevekenyseg" style="display: block; line-height: 15px; margin-top: 2%; background-color: white; width: 400px; margin-left: 35%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+        <div style="text-align: center"><label style="font-size: 30px; font-weight: bold">Válasszon tevékenységet!</label></div><br><br>
+        <button onclick="document.getElementById('tevekenyseg').style.display='none';document.getElementById('MFKdiv').style.display='block';" style="width: 100%; margin-bottom: 10px; padding: 20px; border-color: blue; color: blue;" id="VT_MFK" onmouseover="kiemelbb('VT_MFK','blue');" onmouseout="visszaemelbb('VT_MFK','blue');">Fészek bevitele</button>
+        <button onclick="document.getElementById('tevekenyseg').style.display='none';document.getElementById('KMBdiv').style.display='block';" style="width: 100%; margin-bottom: 10px; padding: 20px; border-color: blue; color: blue;" id="VT_KMB" onmouseover="kiemelbb('VT_KMB','blue');" onmouseout="visszaemelbb('VT_KMB','blue');">Fészek-aktivitás bevitele</button>
+        <button onclick="feszkelomadar()" style="width: 100%; margin-bottom: 10px; padding: 20px; border-color: blue; color: blue;" id="VT_KMA" onmouseover="kiemelbb('VT_KMA','blue');" onmouseout="visszaemelbb('VT_KMA','blue');">Fészkelő madár adatai </button>
+        <button onclick="document.getElementById('tevekenyseg').style.display='none';document.getElementById('FGdiv').style.display='block';" style="width: 100%; margin-bottom: 10px; padding: 20px; border-color: blue; color: blue;" id="VT_FG" onmouseover="kiemelbb('VT_FG','blue');" onmouseout="visszaemelbb('VT_FG','blue');">Fiókák gyűrűzése</button>
+        <button onclick="funkcionemelerheto()" style="width: 100%; margin-bottom: 10px; padding: 20px; border-color: blue; color: blue;" id="VT_FA" onmouseover="kiemelbb('VT_FA','blue');" onmouseout="visszaemelbb('VT_FA','blue');">Fészkelési adatok</button>
+        
+    </div>
+    <div id="MFKdiv" style="display: none; line-height: 15px; margin-top: 4%; background-color: white; width: 960px; margin-left: 16%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px; font-weight: bold;">
+        <div style="text-align: center; margin-bottom: 10px;"><button onclick="feszekbevitel_valttermmest()" id="valttermmest" onmouseover="kiemel('valttermmest','blue')" onmouseout="visszaemel('valttermmest','black')" style="font-size: 15px; color: black; border: none; margin: 0px; padding: 0px;">*Természetes fészek regisztrálása</button></div>
+        <div style="text-align: center; margin-bottom: 30px;"><label class="hkiiras" style="font-size: 30px; font-weight: bold;" id="MFKcim">Mesterséges fészek kirakása</label></div>
+        <div style=" width: 330px; float: left;">
+            <div style="float: left; "> <label> Azonosító<label style="color: red;">*</label><br></label> <input style="width: 60px; margin-bottom: 10px;" type="text" id="MFKazonosito" disabled></div>
+            <div style="float: left; margin-left: 10px;"> <label> Elnevezés<br></label> <input style="width: 190px; margin-bottom: 10px;" type="text" id="MFKelnevezes"></div>
+            <div style="float: left; "> <label> Ország<label style="color: red;">*</label><br></label> <input style="width: 120px; margin-bottom: 10px;" type="text" id="MFKorszag"></div>
+            <div style="float: left;  margin-left: 10px;"> <label> Település<label style="color: red;">*</label><br></label> <input style="width: 130px; margin-bottom: 10px;" type="text" id="MFKtelepules"></div>
+            <div style="float: left; "> <label> Koordináták<label style="color: red;">*</label><br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKkoordinatak"></div>
+            <div style="float: left; "> <label> Madarász<label style="color: red;">*</label><br></label> <input style="width: 150px; margin-bottom: 10px; font-size: 15px; padding: 10px;" type="text" id="MFKmadarasz" disabled></div>
+            <div style="float: left; margin-left: 10px;"> <label> Dátum<label style="color: red;">*</label><br></label> <input style="width: 100px; margin-bottom: 10px;" type="text" id="MFKdatum"></div>
+        </div>
+        <div style=" width: 330px; float: left;">
+            <div style="float: left; "> <label> Élőhely<label style="color: red;">*</label><br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKelohely"></div>
+            <div style="float: left; "> <label> Fészek típus<label style="color: red;">*</label><br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKfeszektipus"></div>
+            <div style="float: left; "> <label> Fészek leírása<br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKfeszekleiras"></div>
+            <div style="float: left; "> <label> Fészket készítette <br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKfeszketkeszitette"></div>
+        </div>
+        <div style=" width: 300px; float: left;">
+            <div style="float: left; "> <label> Célfaj<br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKcelfaj"></div>
+            <div style="float: left; "> <label> Fészek tartó <br></label> <input style="width: 80px; margin-bottom: 10px;" type="text" id="MFKkirakva"></div>
+            <div style="float: left; margin-left: 10px;"> <label> Magasság <br></label> <input style="width: 70px; margin-bottom: 10px;" type="text" id="MFKmagassag"></div>
+            <div style="float: left; margin-left: 10px;"> <label> Irány <br></label> <input style="width: 70px; margin-bottom: 10px;" type="text" id="MFKirany"></div>
+            <div style="float: left; "> <label> Megjegyzés<br></label> <input style="width: 280px; margin-bottom: 10px;" type="text" id="MFKmegjegyzes"></div>
+        </div>
+        <div style=" width: 300px; float: left; margin-top: 17px;">
+            <button onclick="feszekbevitel()" style="width: 100px; margin-bottom: 3px; padding: 5px; border-color: blue; color: blue; float: right;" id="helybevitelkesz" onmouseover="kiemelbb('helybevitelkesz','blue');" onmouseout="visszaemelbb('helybevitelkesz','blue');">mentés</button>
+            <button onclick="document.getElementById('MFKdiv').style.display='none';document.getElementById('tevekenyseg').style.display='block';" style="width: 100px; border-color: grey; color: grey; padding: 5px" id="helybevitemegse" onmouseover="kiemelbb('helybevitemegse','grey');" onmouseout="visszaemelbb('helybevitemegse','grey');">vissza</button>
+        </div>
+    </div>
+    <div id="KMBdiv" style="display: none; line-height: 15px; margin-top: 4%; background-color: white; width: 800px; margin-left: 22%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px; font-weight: bold;">
+        <div style="text-align: center; margin-bottom: 30px;"><label class="hkiiras" style="font-size: 30px; font-weight: bold;" id="MFKcim">Fészek-aktivitás bevitele</label></div>
+        <div style=" width: 400px; float: left;">
+            <div style="float: left; "> <label> Azonosító<label style="color: red;">*</label><br></label> <input style="width: 60px; margin-bottom: 10px;" type="text" id="KMBazonosito" ></div>
+            <div style="float: left; margin-left: 10px;"> <label> Elnevezés<br></label> <input style="width: 260px; margin-bottom: 10px;" type="text" id="KMBelnevezes" placeholder="A beviteli mező jeleneg nem elérhető" disabled></div>
+              <div style="float: left; "> <label> Madarász<label style="color: red;">*</label><br></label> <input style="width: 220px; margin-bottom: 10px; font-size: 18px;" type="text" id="KMBmadarasz" disabled></div>
+            <div style="float: left; margin-left: 10px;"> <label> Dátum<label style="color: red;">*</label><br></label> <input style="width: 100px; margin-bottom: 10px;" type="text" id="KMBdatum"></div>
+            <div style="float: left; "> <label> Faj <label style="color: red;">*</label><br></label> <input style="width: 100px; margin-bottom: 10px;" type="text" id="KMBfaj" ></div>
+            <div style="float: left; margin-left: 10px;"> <label> Észrevétel<label style="color: red;">*</label><br></label> <input style="width: 220px; margin-bottom: 10px;" type="text" id="KMBeszrevetel"></div>
+            <div style="float: left; "> <label> Megfigyelési technika<label style="color: red;">*</label><br></label> <input style="width: 350px; margin-bottom: 10px;" type="text" id="KMBtechnika"></div>
+
+        </div>
+        <div style=" width: 400px; float: left;">
+            <div style="float: left; "> <label> Tojások<br></label> <input style="width: 50px; margin-bottom: 10px;" type="text" id="KMBtojasok"></div>
+            <div style="float: left; margin-left: 10px;"> <label> Fiókák<br></label> <input style="width: 50px; margin-bottom: 10px;" type="text" id="KMBfiokak"></div>
+            <div style="float: left; margin-left: 10px;"> <label> Költés fázisa<br></label> <input style="width: 200px; margin-bottom: 10px;" type="text" id="KMBkoltesfazisa"></div>
+
+            <div style="float: left;"> <label> Megfigyelés részletes leírása (max 200 karakter)<br></label> <textarea style="width: 360px; margin-bottom: 10px; resize: none; font-size: 18px; padding-bottom: 12px;" rows="4" type="text" id="KMBleiras"></textarea></div>
+        </div>
+       
+        <div style=" width: 380px; float: left; margin-top: 17px;">
+            <button onclick="aktivitasbevitel()" style="width: 100px; margin-bottom: 3px; padding: 5px; border-color: blue; color: blue; float: right;" id="aktivitasbevitel" onmouseover="kiemelbb('aktivitasbevitel','blue');" onmouseout="visszaemelbb('aktivitasbevitel','blue');">mentés</button>
+            <button onclick="document.getElementById('KMBdiv').style.display='none';document.getElementById('tevekenyseg').style.display='block';" style="width: 100px; border-color: grey; color: grey; padding: 5px" id="aktivitasbevitelmegse" onmouseover="kiemelbb('aktivitasbevitelmegse','grey');" onmouseout="visszaemelbb('aktivitasbevitelmegse','grey');">vissza</button>
+        </div>
+    </div>
+
+
+
+
+
+    <div id="FGdiv" style="display: none; line-height: 15px; margin-top: 4%; background-color: white; width: 800px; margin-left: 22%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px; font-weight: bold;">
+        
+        <div id="FGdiv1" style="display: block;">
+            <div style="text-align: center; margin-bottom: 30px;"><label class="hkiiras" style="font-size: 30px; font-weight: bold;" id="MFKcim">Fiókák gyűrűzése - 1.lépés</label></div>
+            <div style=" width: 400px; float: left;">
+                <div style="float: left; "> <label> Azonosító<label style="color: red;">*</label><br></label> <input style="width: 60px; margin-bottom: 10px;" type="text" id="FGazonosito" ></div>
+                <div style="float: left; margin-left: 10px;"> <label> Elnevezés<br></label> <input style="width: 260px; margin-bottom: 10px;" type="text" id="FGelnevezes" placeholder="A beviteli mező jeleneg nem elérhető" disabled></div>
+                <div style="float: left; "> <label> Gyűrűző<label style="color: red;">*</label><br></label> <input style="width: 220px; margin-bottom: 10px; font-size: 18px;" type="text" id="FGmadarasz" disabled></div>
+                <div style="float: left; margin-left: 10px;"> <label> Dátum<label style="color: red;">*</label><br></label> <input  style="width: 100px; margin-bottom: 10px;" type="text" id="FGdatum"></div>
+                <div style="float: left; "> <label> Faj <label  style="color: red;">*</label><br></label> <input  style="width: 100px; margin-bottom: 10px;" type="text" id="FGfaj" ></div>
+                <div style="float: left; margin-left: 10px;"> <label> Fiókák<label style="color: red;">*</label><br></label> <input style="width: 40px; margin-bottom: 10px;" type="text" id="FGfiokak"></div>
+                <div style="float: left; margin-left: 10px;"> <label> Költés fázisa<label style="color: red;">*</label><br></label> <input style="width: 150px; margin-bottom: 10px;" type="text" id="FGkoltesfazis"></div>
+            </div>
+            <div style=" width: 400px; float: left;">
+                
+                <div style="float: left;"> <label> Gyűrűk<label style="color: red;">*</label><br></label> <textarea style="width: 360px; margin-bottom: 10px; resize: none; font-size: 18px; padding-bottom: 12px;" rows="4" type="text" id="FGgyuruk" placeholder="Felsorolás vesszővel elválasztva: pl: 3X12345,3X12346,3X12347,3X12348 vagy intervallumban megadva:      pl: 3X : 12345 - 12348" ></textarea></div>
+            </div>
+        
+            <div style=" width: 380px; float: left; margin-top: 17px;">
+                <button onclick="fiokagyuruzesell()" style="width: 100px; margin-bottom: 3px; padding: 5px; border-color: blue; color: blue; float: right;" id="fiokagyuruzes" onmouseover="kiemelbb('fiokagyuruzes','blue');" onmouseout="visszaemelbb('fiokagyuruzes','blue');">Tovább</button>
+                <button onclick="document.getElementById('FGdiv').style.display='none';document.getElementById('tevekenyseg').style.display='block'; FGszm=false;" style="width: 100px; border-color: grey; color: grey; padding: 5px" id="fiokagyuruzesmegse" onmouseover="kiemelbb('fiokagyuruzesmegse','grey');" onmouseout="visszaemelbb('fiokagyuruzesmegse','grey');">vissza</button>
+            </div>
+        </div>
+        
+        <div id="FGdiv2" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;"><label class="hkiiras" style="font-size: 30px; font-weight: bold;" id="MFKcim">Fiókák gyűrűzése - adatok ellenőrzése</label></div>
+            <div style=" width: 100%; ">
+                <table id="ellenorzotablaFG1" style="font-size: 15px; border: 1px solid black ;margin-top: 10px; margin-left: 21%; background-color: black; text-align: center;">
+                    <tr style="font-size: 15px;  background-color: skyblue;">
+                        <th style="width: 100px ; border-width: 3px;">Fészek</th>
+                        <th style="width: 100px ; border-width: 3px;">Dátum</th>
+                        <th style="width: 250px ; border-width: 3px;">Gyűrűző</th>                        
+                    </tr>
+                </table><table id="ellenorzotablaFG2" style="font-size: 15px; border: 1px solid black ;margin-top: 10px; background-color: black; text-align: center;">
+                    <tr style="font-size: 15px;  background-color: skyblue;">
+                        <th style="width: 100px ; border-width: 3px;">Faj</th>
+                        <th style="width: 100px ; border-width: 3px;">Gyűrű</th>
+                        <th style="width: 300px ; border-width: 3px;">Szines gyűrű (H_Sz_K)</th>     
+                        <th style="width: 350px ; border-width: 3px;">Megjegyzés</th>                                      
+                    </tr>
+                </table>
+            </div>
+            <div style=" width: 100%; float: left; margin-top: 30px;">
+                <button onclick="fiokagyuruzes()" style="width: 100px; margin-bottom: 3px; padding: 5px; border-color: blue; color: blue; float: right;" id="fiokagyuruzesOK" onmouseover="kiemelbb('fiokagyuruzesOK','blue');" onmouseout="visszaemelbb('fiokagyuruzesOK','blue');">Mentés</button>
+                <button onclick="funkcionemelerheto()" style="width: 500px; margin-bottom: 3px; margin-right: 50px; padding: 5px; border-color: grey; color: grey; float: right;" id="szgymegnyit" onmouseover="kiemelbb('szgymegnyit','grey');" onmouseout="visszaemelbb('szgymegnyit','grey');">Színes gyűrűk és megjegyzés hozzáadása</button>
+                <button onclick="document.getElementById('FGdiv2').style.display='none';document.getElementById('FGdiv1').style.display='block'; FGgyuru.length=0;" style="width: 100px; border-color: grey; color: grey; padding: 5px" id="FGdiv2M" onmouseover="kiemelbb('FGdiv2M','grey');" onmouseout="visszaemelbb('FGdiv2M','grey');">vissza</button>
+            </div>
+        </div>
+        
+        
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <div id="uzi" style="display: none;line-height: 40px; background-color: white; text-align: center; width: 600px;  margin-left: 28%; margin-right:40%; margin-top: 10%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+        <h1 id="uzikiiratash2"></h1>
+    </div>
+<script>
+    if (localStorage.getItem("feszkelomadar")==="returnOK"){
+        localStorage.setItem("feszkelomadar", "false");
+        kiiras("Sikeres adatbevitel!","lightgreen", "5px solid green", 3000);
+    }
+    if (localStorage.getItem("feszkelomadar")==="true"){
+        localStorage.setItem("feszkelomadar", "false");
+    }
+    let termmest="mesterseges";
+    let FGgyuru = [], FGszines = [], FGmegjegyzes = [];
+    let FGszm=false;
+    let ellMFK=false, ellKMB=false, ellFG=false;
+    let felhasznalonev = localStorage.getItem("felhasznalonev"), nev=localStorage.getItem('nev');
+    MFKazonositofrissit();
+    const dat = new Date();
+    let datum = dat.getFullYear()+"."+(dat.getMonth()+1)+"."+dat.getDate()+".";
+    document.getElementById("MFKorszag").value="Szerbia";
+    document.getElementById("MFKmadarasz").value=nev;
+    document.getElementById("KMBmadarasz").value=nev;
+    document.getElementById("FGmadarasz").value=nev;
+    document.getElementById("MFKdatum").value=datum;
+    document.getElementById("KMBdatum").value=datum;
+
+
+    function feszkelomadar(){
+        localStorage.setItem("feszkelomadar", "true");
+        window.location.href="gyuruzofuzet.html";
+    }
+
+
+    function fiokagyuruzesell(){
+        if (!ellFG){
+            if(document.getElementById("FGazonosito").value!==""){document.getElementById("FGazonosito").style.borderColor="#BAD1CD";}
+            if(document.getElementById("FGmadarasz").value!==""){document.getElementById("FGmadarasz").style.borderColor="#BAD1CD";}
+            if(document.getElementById("FGdatum").value!==""){document.getElementById("FGdatum").style.borderColor="#BAD1CD";}
+            if(document.getElementById("FGfaj").value!==""){document.getElementById("FGfaj").style.borderColor="#BAD1CD";}
+            if(document.getElementById("FGfiokak").value!==""){document.getElementById("FGfiokak").style.borderColor="#BAD1CD";}
+            if(document.getElementById("FGkoltesfazis").value!==""){document.getElementById("FGkoltesfazis").style.borderColor="#BAD1CD";}
+            if(document.getElementById("FGgyuruk").value!==""){document.getElementById("FGgyuruk").style.borderColor="#BAD1CD";}
+        }
+        ellFG=true;
+        if(document.getElementById("FGazonosito").value===""){document.getElementById("FGazonosito").style.borderColor="red"; ellFG=false;}
+        if(document.getElementById("FGmadarasz").value===""){document.getElementById("FGmadarasz").style.borderColor="red"; ellFG=false;}
+        if(document.getElementById("FGdatum").value===""){document.getElementById("FGdatum").style.borderColor="red"; ellFG=false;}
+        if(document.getElementById("FGfaj").value===""){document.getElementById("FGfaj").style.borderColor="red"; ellFG=false;}
+        if(document.getElementById("FGfiokak").value===""){document.getElementById("FGfiokak").style.borderColor="red"; ellFG=false;}
+        if(document.getElementById("FGkoltesfazis").value===""){document.getElementById("FGkoltesfazis").style.borderColor="red"; ellFG=false;}
+        if(document.getElementById("FGgyuruk").value===""){document.getElementById("FGgyuruk").style.borderColor="red"; ellFG=false;}
+        else{
+            let GG=document.getElementById("FGgyuruk").value.split(' ')
+            if (GG.length===5){ //3X : 15456 - 15458
+                if (ellenorizIntreAlakithato(GG[2]) && ellenorizIntreAlakithato(GG[4]) && GG[3]==="-" && GG[1] === ":" && ellenorizIntreAlakithato(document.getElementById("FGfiokak").value))
+                {
+                    if(parseInt(GG[4])-parseInt(GG[2])+1===parseInt(document.getElementById("FGfiokak").value)){
+                        let ii=0;
+                        for (let i=parseInt(GG[2]);i<=parseInt(GG[4]);i++){
+                            FGgyuru[ii]=GG[0]+i;
+                            ii++;
+                        }
+                    } else {kiiras("Ellenőrizze a bevitt adatokat!","#ffded4", "5px solid red", 3000); ellFG=false; GG.length=0;}
+                } else {kiiras("Ellenőrizze a bevitt adatokat!","#ffded4", "5px solid red", 3000); ellFG=false; GG.length=0;}
+            } else{            
+                FGgyuru = document.getElementById("FGgyuruk").value.split(',');        
+                if(FGgyuru.length !== parseInt(document.getElementById("FGfiokak").value)){
+                    kiiras("Ellenőrizze a bevitt adatokat!","#ffded4", "5px solid red", 3000); ellFG=false;
+                }
+        }
+        }
+        if(felhasznalonev===""){ellFG=false;}
+        if (ellFG)
+        {
+            let tabla1= document.getElementById("ellenorzotablaFG1");
+            let tabla2= document.getElementById("ellenorzotablaFG2");
+            while (tabla1.rows.length > 1) {tabla1.deleteRow(1);}
+            while (tabla2.rows.length > 1) {tabla2.deleteRow(1);}
+            document.getElementById("FGdiv1").style.display="none";
+            document.getElementById("FGdiv2").style.display="block";
+
+            let newRow = tabla1.insertRow(1);
+
+
+            newRow.insertCell(0).innerHTML = document.getElementById("FGazonosito").value;
+            newRow.insertCell(1).innerHTML = document.getElementById("FGdatum").value;
+            newRow.insertCell(2).innerHTML = nev;
+            newRow.style.backgroundColor="white";
+            for (let i=0;i<FGgyuru.length;i++){
+                let newRow2 = tabla2.insertRow(i+1);
+                newRow2.insertCell(0).innerHTML = document.getElementById("FGfaj").value;
+                newRow2.insertCell(1).innerHTML = FGgyuru[i];
+                let sz="",m="";
+                if(false)//************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!********************
+                {
+                    sz=FGszines[i];
+                    m=FGmegjegyzes[i];
+                }
+                newRow2.insertCell(2).innerHTML = sz;
+                newRow2.insertCell(3).innerHTML = m;
+                newRow2.style.backgroundColor="white";
+            }
+        }
+    }
+
+    function fiokagyuruzes(){
+        let szamlalo=0;
+        localStorage.setItem("eredmeny", "");
+        localStorage.setItem("siker", "siker");
+        let gyuruzokozpont = "BELGRADE";
+        let orszag = "Szerbia";
+        let adatok;
+        if (ellFG){
+            for (i=0;i<FGgyuru.length;i++){
+                adatok= "&gyuruzobox=" + nev + 
+                "&gyuruzohelybox=Fészek " + document.getElementById("FGazonosito").value + 
+                "&datumbox=" + document.getElementById("FGdatum").value + 
+                "&szedesbox=&halobox=&adatbox=ujgyuru&gyurubox=" + FGgyuru[i] +
+                "&fajbox=" + document.getElementById("FGfaj").value + 
+                "&madarallapotabox=Egészséges" +
+                "&megjegyzesbox=" + //FGmegjegyzes[i] +
+                "&gyuruzokozpontbox=" + gyuruzokozpont + "&orszagbox=" + orszag +
+                "&gyuruzesutanbox=Visszahelyezve a fészekbe&befogasbox=Fészekben befogva fiókaként&csalibox=&megjegyzesBCSbox=&korbox=R" + 
+                "&ivarbox=&zsirbox=&izombox=&vedlesbox&foltbox=&kotlofoltbox=&kopasbox=&harmadikevezobox=&szarnybox=&farokbox=&talpbox=&tomegbox=&szarnyformulabox=";
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                    if(xhr.status===200)
+                    {
+                        let s=localStorage.getItem("eredmeny");
+                        const results= JSON.parse(xhr.responseText);
+                        if (results!=="OK"){
+                            localStorage.setItem("siker", "nemsiker");
+                            localStorage.setItem("eredmeny", s + "[" + FGgyuru[szamlalo] + " - ERROR] ");
+                        } 
+                        else {                        localStorage.setItem("eredmeny", s + "[" + FGgyuru[szamlalo] + " - OK] ");                    }
+                        szamlalo++;
+                        if (szamlalo===FGgyuru.length)
+                        {
+                            if (localStorage.getItem("siker")==="siker"){kiiras("Sikeres adatbevitel!","lightgreen", "5px solid green", 3000);
+
+                            if(document.getElementById("FGazonosito").value!==""){document.getElementById("FGazonosito").style.borderColor="#BAD1CD";}
+                            document.getElementById("FGazonosito").value="";
+                            document.getElementById("FGdatum").value="";
+                            document.getElementById("FGfaj").value="";
+                            document.getElementById("FGfiokak").value="";
+                            document.getElementById("FGkoltesfazis").value="";
+                            document.getElementById("FGgyuruk").value="";
+                            document.getElementById('FGdiv2').style.display='none';
+                            document.getElementById('FGdiv1').style.display='block';
+                            FGszm=false;
+                            }
+                            else{
+                                kiiras("Hiba az adatbevitel közben!","#ffded4", "5px solid red", 3000);
+                                setTimeout(function (){alert("A szerver hibaüzenete: " + localStorage.getItem("eredmeny"));},10);
+                            }
+                        }
+                    }
+                }
+                xhr.open("GET", "gyuruzofuzet.php?task=AB"+adatok);
+                xhr.send();
+
+            }
+       
+    }
+    }
+   
+
+    function feszekbevitel_valttermmest(){
+        if (termmest==="mesterseges")
+        {
+            termmest="termeszetes";
+            document.getElementById("valttermmest").textContent="*Mesterséges fészek kirakása";
+            document.getElementById("MFKcim").textContent="Természetes fészek regisztrálása";
+            document.getElementById("MFKdiv").style.border="2px solid green";
+
+        }
+        else
+        {
+            termmest="mesterseges";
+            document.getElementById("MFKcim").textContent="Mesterséges fészek kirakása";
+            document.getElementById("valttermmest").textContent="*Természetes fészek regisztrálása";
+            document.getElementById("MFKdiv").style.border="2px solid black";
+
+        }
+    }
+    function feszekbevitelell(){
+        if (!ellMFK){
+            if(document.getElementById("MFKazonosito").value!==""){document.getElementById("MFKazonosito").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKorszag").value!==""){document.getElementById("MFKorszag").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKtelepules").value!==""){document.getElementById("MFKtelepules").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKkoordinatak").value!==""){document.getElementById("MFKkoordinatak").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKmadarasz").value!==""){document.getElementById("MFKmadarasz").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKdatum").value!==""){document.getElementById("MFKdatum").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKelohely").value!==""){document.getElementById("MFKelohely").style.borderColor="#BAD1CD";}
+            if(document.getElementById("MFKfeszektipus").value!==""){document.getElementById("MFKfeszektipus").style.borderColor="#BAD1CD";}
+        }
+        ellMFK=true;
+        if(document.getElementById("MFKazonosito").value===""){document.getElementById("MFKazonosito").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKorszag").value===""){document.getElementById("MFKorszag").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKtelepules").value===""){document.getElementById("MFKtelepules").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKkoordinatak").value===""){document.getElementById("MFKkoordinatak").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKmadarasz").value===""){document.getElementById("MFKmadarasz").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKdatum").value===""){document.getElementById("MFKdatum").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKelohely").value===""){document.getElementById("MFKelohely").style.borderColor="red"; ellMFK=false;}
+        if(document.getElementById("MFKfeszektipus").value===""){document.getElementById("MFKfeszektipus").style.borderColor="red"; ellMFK=false;}
+        if (felhasznalonev===""){ellMFK=false;}
+    }
+
+    function feszekbevitel(){
+        feszekbevitelell();
+        if (ellMFK){
+            let adatok="&MFKazonosito=" + document.getElementById("MFKazonosito").value + 
+            "&MFKelnevezes=" + document.getElementById("MFKelnevezes").value + 
+            "&MFKorszag=" + document.getElementById("MFKorszag").value + 
+            "&MFKtelepules=" + document.getElementById("MFKtelepules").value + 
+            "&MFKkoordinatak=" + document.getElementById("MFKkoordinatak").value + 
+            "&MFKdatum=" + document.getElementById("MFKdatum").value + 
+            "&MFKelohely=" + document.getElementById("MFKelohely").value + 
+            "&MFKfeszektipus=" + document.getElementById("MFKfeszektipus").value + 
+            "&MFKfeszekleiras=" + document.getElementById("MFKfeszekleiras").value + 
+            "&MFKfeszketkeszitette=" + document.getElementById("MFKfeszketkeszitette").value + 
+            "&MFKcelfaj=" + document.getElementById("MFKcelfaj").value + 
+            "&MFKkirakva=" + document.getElementById("MFKkirakva").value + 
+            "&MFKmagassag=" + document.getElementById("MFKmagassag").value + 
+            "&MFKirany=" + document.getElementById("MFKirany").value + 
+            "&MFKmegjegyzes=" + document.getElementById("MFKmegjegyzes").value +
+            "&MFKtermmest=" + termmest + "&MFKfelhasznalonev=" + felhasznalonev + "&MFKallapot=aktiv";
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                if(xhr.status===200)
+                {
+                    const results= JSON.parse(xhr.responseText);
+                    if (results==="OK"){
+                        kiiras("Sikeres adatbevitel!","lightgreen", "5px solid green", 3000);
+                        MFKazonositofrissit();
+                        document.getElementById("MFKelnevezes").value="";
+                        document.getElementById("MFKkoordinatak").value="";
+                        document.getElementById("MFKelohely").value="";
+                        document.getElementById("MFKfeszektipus").value="";
+                        document.getElementById("MFKfeszekleiras").value="";
+                        document.getElementById("MFKfeszketkeszitette").value="";
+                        document.getElementById("MFKcelfaj").value="";
+                        document.getElementById("MFKkirakva").value="";
+                        document.getElementById("MFKmagassag").value="";
+                        document.getElementById("MFKirany").value="";
+                        document.getElementById("MFKmegjegyzes").value="";
+                        
+
+                        
+                    } else
+                        kiiras("Hiba az adatbevitel közben!","#ffded4", "5px solid red", 3000);
+                }
+            }
+            xhr.open("GET", "gyuruzofuzet.php?task=MFKB"+adatok);
+            xhr.send();
+        }
+    }
+    function MFKazonositofrissit(){
+        const xhr=new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let adatok = JSON.parse(xhr.responseText);
+                adatok.forEach(
+                    function (adat){
+                        document.getElementById("MFKazonosito").value=parseInt(adat.maxID)+1;
+                        if (document.getElementById("MFKazonosito").value==="NaN"){document.getElementById("MFKazonosito").value="1";}
+                    }
+                )
+            }
+            else {alert("Hiba az azonosító létrehozása közben!");}
+        }
+        xhr.open("GET", "gyuruzofuzet.php?task=MFKmaxIDL&felhasznalonev="+felhasznalonev);
+        xhr.send();
+    }
+
+
+
+
+
+    function aktivitasbevitelell(){
+        if (!ellKMB){
+            if(document.getElementById("KMBazonosito").value!==""){document.getElementById("KMBazonosito").style.borderColor="#BAD1CD";}
+            if(document.getElementById("KMBmadarasz").value!==""){document.getElementById("KMBmadarasz").style.borderColor="#BAD1CD";}
+            if(document.getElementById("KMBdatum").value!==""){document.getElementById("KMBdatum").style.borderColor="#BAD1CD";}
+            if(document.getElementById("KMBfaj").value!==""){document.getElementById("KMBfaj").style.borderColor="#BAD1CD";}
+            if(document.getElementById("KMBeszrevetel").value!==""){document.getElementById("KMBeszrevetel").style.borderColor="#BAD1CD";}
+            if(document.getElementById("KMBtechnika").value!==""){document.getElementById("KMBtechnika").style.borderColor="#BAD1CD";}
+        }
+        ellKMB=true;
+        if(document.getElementById("KMBazonosito").value===""){document.getElementById("KMBazonosito").style.borderColor="red"; ellKMB=false;}
+        if(document.getElementById("KMBmadarasz").value===""){document.getElementById("KMBmadarasz").style.borderColor="red"; ellKMB=false;}
+        if(document.getElementById("KMBdatum").value===""){document.getElementById("KMBdatum").style.borderColor="red"; ellKMB=false;}
+        if(document.getElementById("KMBfaj").value===""){document.getElementById("KMBfaj").style.borderColor="red"; ellKMB=false;}
+        if(document.getElementById("KMBeszrevetel").value===""){document.getElementById("KMBeszrevetel").style.borderColor="red"; ellKMB=false;}
+        if(document.getElementById("KMBtechnika").value===""){document.getElementById("KMBtechnika").style.borderColor="red"; ellKMB=false;}
+        if (felhasznalonev===""){ellKMB=false;}
+
+    }
+
+    function aktivitasbevitel(){
+        aktivitasbevitelell();
+        if (ellKMB){
+            let adatok = "&KMBazonosito=" + document.getElementById("KMBazonosito").value + 
+            "&KMBmadarasz=" + document.getElementById("KMBmadarasz").value + 
+            "&KMBdatum=" + document.getElementById("KMBdatum").value + 
+            "&KMBfaj=" + document.getElementById("KMBfaj").value + 
+            "&KMBeszrevetel=" + document.getElementById("KMBeszrevetel").value + 
+            "&KMBtechnika=" + document.getElementById("KMBtechnika").value + 
+            "&KMBtojasok=" + document.getElementById("KMBtojasok").value + 
+            "&KMBfiokak=" + document.getElementById("KMBfiokak").value + 
+            "&KMBkoltesfazisa=" + document.getElementById("KMBkoltesfazisa").value + 
+            "&KMBleiras=" + document.getElementById("KMBleiras").value;
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                if(xhr.status===200)
+                {
+                    const results= JSON.parse(xhr.responseText);
+                    if (results==="OK"){
+                        kiiras("Sikeres adatbevitel!","lightgreen", "5px solid green", 3000);
+                        document.getElementById("KMBazonosito").value = "";
+                        document.getElementById("KMBelnevezes").value = "";
+                        document.getElementById("KMBfaj").value = "";
+                        document.getElementById("KMBeszrevetel").value = "";
+                        document.getElementById("KMBtechnika").value = "";
+                        document.getElementById("KMBtojasok").value = "";
+                        document.getElementById("KMBfiokak").value = "";
+                        document.getElementById("KMBkoltesfazisa").value = "";
+                        document.getElementById("KMBleiras").value = "";
+                        
+
+            
+                    } else
+                        kiiras("Hiba az adatbevitel közben!","#ffded4", "5px solid red", 3000);
+                }
+            }
+            xhr.open("GET", "gyuruzofuzet.php?task=KMB"+adatok);
+            xhr.send();
+        }
+        
+    }
+
+    function ellenorizIntreAlakithato(string) {
+    // Próbáljuk meg átalakítani egész számmá
+    const szam = parseInt(string, 10);
+
+    // Ellenőrizzük, hogy az eredmény nem NaN és az eredeti string nem tartalmaz felesleges karaktereket
+    return !isNaN(szam) && szam.toString() === string.trim();
+}
+
+    function funkcionemelerheto(){
+    kiiras('Ez a funkció jelenleg nem elérhető!','lightblue', '5px solid blue', 3000);
+}
+    function kiemel(id,szin) {
+        document.getElementById(id).style.color=szin;
+    }
+    function visszaemel(id,szin) {
+        document.getElementById(id).style.color=szin;
+
+    }
+    function kiemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+    }
+    function visszaemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+
+    }
+    function kiiras(szoveg,hatter,korvonal,ido)
+    {
+        document.getElementById("uzi").style.display="block";
+        let div = document.getElementById("uzi");
+        let h2 = document.getElementById("uzikiiratash2");
+        div.style.border=korvonal;
+        div.style.backgroundColor=hatter;
+        h2.textContent=szoveg;
+        setTimeout(function (){document.getElementById("uzi").style.display="none"},ido);
+    }
+    function kiemelbb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+        document.getElementById(id).style.backgroundColor=szin;
+        document.getElementById(id).style.color="white";
+
+    }
+    function visszaemelbb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+        document.getElementById(id).style.backgroundColor="white";
+        document.getElementById(id).style.color=szin;
+
+    }
+</script>
+</body>
+</html>

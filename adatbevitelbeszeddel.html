@@ -1,0 +1,1147 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Adatbevitel</title>
+    <link rel="stylesheet" href="dizajn.css">
+    <style>
+        .ua{
+            font-size: 25px;
+        }
+        .hl{
+            font-size: 20px;
+            line-height: 18px;
+        }
+        .inputjobbrapicike{
+            float: right;
+            padding: 5px;
+            font-size: 15px;
+            }
+    </style>
+</head>
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Madárgyűrűzés</label>
+        <div style="float: right; display: flex; align-items: flex-start; margin-top: 2px">
+            <a href="bejelentkezes.html" id="bej" onmouseover="kiemel('bej','blue')" onmouseout="visszaemel('bej','black')" style="padding-right: 20px"><img id="bejkep" style="width: 40px; border-radius: 5px ;border: 2px solid black;padding-right: 2px; padding-bottom: 2px" src="bejelentkez+¬s.svg" alt=""></a>
+        </div>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')" style="padding-right: 30px">Kezdőlap</a>
+            <a href="adatbevitel.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" >Adatbevitel</a>
+            <a href="adatlistazas.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">Adatlistázás</a>
+            <a href="segitseg.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px">Segítség</a>
+            <label  style="font-size: 15px; margin-top: 8px" id="bejgli"></label>
+        </div>
+    </div>
+</header>
+<body>
+<div id="helybevisz" style="display: none; line-height: 15px; margin-top: 0.5%; background-color: white; width: 400px; margin-left: 33%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <div style="text-align: center"><label style="font-size: 30px; font-weight: bold">Hely bevitele</label></div><br><br>
+    <label class="hl"> Helyazonosító:</label> <input class="inputjobbrapicike" type="text" id="helyazonosito" ><br><br>
+    <label class="hl"> Elnevezés: </label><input class="inputjobbrapicike" type="text" id="elnevezes"><br><br>
+    <label class="hl"> Ország: </label><input class="inputjobbrapicike" type="text" id="orszag"><br><br>
+    <label class="hl"> Település:</label> <input class="inputjobbrapicike" type="text" id="telepules"><br><br>
+    <label class="hl"> N-koordináta:</label><input class="inputjobbrapicike" type="text" id="Nkoordinata"><br><br>
+    <label class="hl"> S-koordináta:</label><input class="inputjobbrapicike" type="text" id="Skoordinata"><br><br>
+    <label class="hl"> Létrehozás:</label><input class="inputjobbrapicike" type="text" id="letrehozas"><br><br>
+    <label class="hl"> Típus:</label><input class="inputjobbrapicike" type="text" id="tipus"><br><br>
+    <label class="hl"> Gyűrűző:</label><input class="inputjobbrapicike" type="text" id="gyuruzo"><br><br>
+    <label class="hl"> Élőhely:</label><input class="inputjobbrapicike" type="text" id="elohely"><br><br>
+    <label class="hl"> Hálók száma:</label><input class="inputjobbrapicike" type="text" id="halok"><br><br>
+    <label class="hl"> Leírás:</label><textarea  class="inputjobbrapicike" id="leiras" style="width: 270px" rows="6"></textarea> <br><br>
+    <button onclick="helybevitel()" style="width: 100px; margin-bottom: 3px; padding: 5px" id="helybevitelkesz" onmouseover="kiemelb('helybevitelkesz','blue');kiemel('helybevitelkesz','blue')" onmouseout="visszaemelb('helybevitelkesz','#19647E');visszaemel('helybevitelkesz','#19647E')">kész</button>
+    <button onclick="helybevitelmegsem()" style="width: 100px; border-color: grey; color: grey; padding: 5px" id="helybevitemegse" onmouseover="kiemelb('helybevitemegse','blue');kiemel('helybevitemegse','blue')" onmouseout="visszaemelb('helybevitemegse','grey');visszaemel('helybevitemegse','grey')">mégsem</button>
+</div>
+<div id="felugroablak" style="display: none; line-height: 15px; background-color: white; width: 400px;  margin-left: 34%; margin-right:40%; margin-top: 2%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <label class="ua" style="float: left">gyűrű:</label><label class="ua" style="float: right" id="gyurue"></label><br><br>
+  <!--  <label class="ua" style="float: left">dátum:</label><label class="ua" style="float: right" id="date">[date]</label><br><br>
+    <label class="ua" style="float: left">idő:</label><label class="ua" style="float: right" id="idoe">[time]</label><br><br> -->
+    <label class="ua" style="float: left">hely:</label><label class="ua" style="float: right" id="helye" ></label><br><br>
+    <label class="ua" style="float: left">faj:</label><label class="ua" style="float: right" id="faje"></label><br><br>
+    <label class="ua" style="float: left">nem:</label><label class="ua" style="float: right" id="neme"></label><br><br>
+    <label class="ua" style="float: left">kor:</label><label class="ua" style="float: right" id="kore"></label><br><br>
+    <label class="ua" style="float: left">első evező:</label><label class="ua" style="float: right" id="elsoevezoe"></label><br><br>
+    <label class="ua" style="float: left">tömeg:</label><label class="ua" style="float: right" id="tomege"></label><br><br>
+    <label class="ua" style="float: left">zsír:</label><label class="ua" style="float: right" id="zsire"></label><br><br>
+    <label class="ua" style="float: left">izom:</label><label class="ua" style="float: right" id="izome"></label><br><br>
+    <label class="ua" style="float: left">vedlés:</label><label class="ua" style="float: right" id="vedlese"></label><br><br>
+    <label class="ua" style="float: left">megjegyzés:</label><br><br><textarea class="ua" style="width: 380px; padding: 1px; font-size: 15px" rows="5" id="megjegyzese" disabled></textarea><br>
+    <br><button onclick="adatbevitelmegsem()" style="border-color: grey; color: grey" id="adatbevitelmegsem" onmouseover="kiemelb('adatbevitelmegsem','blue');kiemel('adatbevitelmegsem','blue')" onmouseout="visszaemelb('adatbevitelmegsem','grey');visszaemel('adatbevitelmegsem','grey')">mégsem</button>
+    <button onclick="adatbevitelajax()" id="adatbevitelkesz" style="float: right" onmouseover="kiemelb('adatbevitelkesz','blue');kiemel('adatbevitelkesz','blue')" onmouseout="visszaemelb('adatbevitelkesz','#19647E');visszaemel('adatbevitelkesz','#19647E')">adatbevitel</button>
+</div>
+<div id="uzi" style="display: none;line-height: 40px; background-color: white; text-align: center; width: 600px;  margin-left: 28%; margin-right:40%; margin-top: 10%;; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <h1 id="uzikiiratash2"></h1>
+</div>
+<div id="gyorsito" style="display: none; line-height: 15px; background-color: white; width: 400px; height: 500px; margin-left: 34%; margin-right:40%; margin-top: 2%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+    <label style="font-size: 20px; font-weight: bold">Vigye be a gyűrűsorozatok kezdőértékeit!</label><br><br>
+    <label style="font-size: 25px">A</label><input style="width: 100px; padding: 2px; font-size: 25px" type="text" id="GA">
+    <label style="font-size: 25px">B</label><input style="width: 100px; padding: 2px; font-size: 25px" type="text" id="GB">
+    <label style="font-size: 25px">BB</label><input style="width: 100px; padding: 2px; font-size: 25px" type="text" id="GBB"><br><br>
+    <label style="font-size: 25px">D</label><input style="width: 100px; padding: 2px; font-size: 25px" type="text" id="GD">
+    <label style="font-size: 25px">G</label><input style="width: 100px; padding: 2px; font-size: 25px;" type="text" id="GG">
+    <label style="font-size: 25px">3X</label><input style="width: 100px; padding: 2px; font-size: 25px" type="text" id="G3X"><br><br>
+    <label style="font-size: 18px; line-height: 17px; font-weight: bold"><br>Vigyen be 10 madár nevét, és adatbevitelkor csak a sorszámot mondja fel!</label><br><br>
+    <div style="width: 48%; float: left;">
+        <label style="font-size: 15px; font-weight: bold">egy:</label><br><input type="text" id="f1" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">kettő:</label><br><input type="text" id="f2" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">három:</label><br><input type="text" id="f3" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">négy:</label><br><input type="text" id="f4" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">öt:</label><br><input type="text" id="f5" style="width: 180px; padding: 5px; font-size: 15px"><br>
+    </div>
+    <div style="width: 48%; float: right;">
+        <label style="font-size: 15px; font-weight: bold">hat:</label><br><input type="text" id="f6" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">hét:</label><br><input type="text" id="f7" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">nyolc:</label><br><input type="text" id="f8" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">kilenc:</label><br><input type="text" id="f9" style="width: 180px; padding: 5px; font-size: 15px"><br>
+        <label style="font-size: 15px; font-weight: bold">tíz:</label><br><input type="text" id="f10" style="width: 180px; padding: 5px; font-size: 15px"><br><br>
+    </div>
+    <div style="width: 100%; float: left">
+        <button style="float: left" onclick="gyorsitmegsem()">mégsem</button>
+        <button style="float: right" onclick="gyorsitment()">kész</button>
+    </div>
+
+</div>
+    <br>
+    <div style="text-align: center"><label class="hkiiras" style="font-size: 35px; " id="cim">Adatbevitel</label></div>
+<div style="font-weight: bold; line-height: 22px; margin-top: 30px">
+
+        <div style="text-align: center">
+            <label style="font-size: 18px" > Hely azonosító: </label><input  style="font-size: 15px; width: 158px"  type="text" id="helykpbox" name="helykpbox" >
+            <button  style="border-width: 3px; padding-top: 5px; padding-bottom: 6px; font-size: 18px; padding-right: 9px; padding-left:9px;  margin: 0" id="helybevitel" onclick="helybevitelmegjelenit()" onmouseover="kiemelb('helybevitel','blue');kiemel('helybevitel','blue')" onmouseout="visszaemelb('helybevitel','#19647E');visszaemel('helybevitel','#19647E')"> + </button>
+            <label style="font-size: 18px; margin-left: 40px" > Gyűrűző: </label><input  style="font-size: 15px; width: 160px;"  type="text" id="gyuruzobox" name="gyuruzobox" disabled ><br><br>
+        </div>
+        <div style=" width: 45%; float: right; margin-right: 40px">
+            <div style=" width: 50%; float: left">
+                <label> Gyűrű<br></label> <input class="inputjobbra" type="text" id="gyurutbox" name="gyurutbox" placeholder="gyűrű azonosítója"><br><br>
+                <label> Fajta <br></label> <input class="inputjobbra" type="text" id="fajbox" name="fajbox" placeholder="madár faja"><br><br>
+                <label> Nem <br></label><input class="inputjobbra" type="text" id="nembox" name="nembox" placeholder="madár neme"><br><br>
+                <label> Kor <br></label><input class="inputjobbra" type="text" id="korbox" name="korbox" placeholder="madár kora"><br><br>
+                <label> Megjegyzés <br></label><textarea class="inputjobbra" name="megjegyzesbox" id="megjegyzesbox" cols="50" rows="3"></textarea> <br><br>
+            </div>
+            <div style="width: 50%; float: right">
+                <label> Tömeg <br></label><input class="inputjobbra" type="text" id="tomegbox" name="tomegbox" placeholder="tömeg [g]"><br><br>
+                <label> Első evező <br></label><input class="inputjobbra" type="text" id="elsoevezobox" name="elsoevezobox" placeholder="első elsőrendű evező [cm]"><br><br>
+                <label> Zsír <br></label><input class="inputjobbra" type="text" id="zsirbox" name="zsirbox" placeholder="zsír [érték]"><br><br>
+                <label> Izom <br></label><input class="inputjobbra" type="text" id="izombox" name="izombox" placeholder="izom [érték]"><br><br>
+                <label> Vedlés <br></label><input class="inputjobbra" type="text" id="vedlesbox" name="vedlesbox" placeholder="vedlés [érték]"><br><br>
+            </div>
+
+        </div>
+
+</div>
+<div style=" width: 40%;margin-left: 70px">
+    <div>
+        <div class="bekereteyettbox2" style="float: left; width: 44%; margin: 5px" onclick="adatbevitelellenorzesakt()" id="adatbevitel" onmouseover="kiemelb('adatbevitel','blue')" onmouseout="visszaemelb('adatbevitel','#F88532')">
+            <label style="font-size: 25px; font-weight: bold" >Adatbevitel</label><br>
+            <label style="font-size: 15px; color: #F88532" >Az adatok rögzítése az adatbázisba</label>
+        </div>
+        <div style="margin-top: 6px; margin-bottom: 10px; float: right; margin-right: 6px">
+            <button style="padding-top: 15px; padding-bottom: 13px; width: 140px" onclick="indexvalt('altalanos')" id="altalanos" >Új gyűrű</button>
+            <button style="padding-top: 15px; padding-bottom: 13px; width: 150px" onclick="indexvalt('visszafogas')" id="visszafogas" >Visszafogás</button>
+        </div>
+
+        <div class="bekereteyettbox2" style="float: left; width: 44%;margin: 5px" onclick="adattorles()" id="adattorles" onmouseover="kiemelb('adattorles','blue')" onmouseout="visszaemelb('adattorles','#F88532')">
+            <label style="font-size: 25px; font-weight: bold" >Adattörlés</label><br>
+            <label style="font-size: 15px; color: #F88532" >Az eddig bevitt adatok törlése</label>
+        </div>
+        <div class="bekereteyettbox2" style="float: right; width: 44%;margin: 5px; margin-top:1px" onclick="beszedfelismeres()" id="frissites" onmouseover="kiemelb('frissites','blue')" onmouseout="visszaemelb('frissites','#F88532')">
+            <label style="font-size: 25px; font-weight: bold" >Frissítés</label><br>
+            <label style="font-size: 15px; color: #F88532" >Beszédfelismerés újraindítása</label>
+        </div>
+        <div class="bekereteyettbox2" style="float: left; width: 44%; margin: 5px" onclick="adatvisszatoltes()" id="vissza" onmouseover="kiemelb('vissza','blue')" onmouseout="visszaemelb('vissza','#F88532')">
+            <label style="font-size: 25px; font-weight: bold" >Adatvisszatöltés</label><br>
+            <label style="font-size: 15px; color: #F88532" >Az utoljára bevitt adat visszatöltése</label>
+        </div>
+        <div class="bekereteyettbox2" style="float: right; width: 44%;margin: 5px" onclick="gyorsitmegj()" id="gyors" onmouseover="kiemelb('gyors','blue')" onmouseout="visszaemelb('gyors','#F88532')">
+            <label style="font-size: 25px; font-weight: bold" >Gyorsítóadatok</label><br>
+            <label style="font-size: 14.5px; color: #F88532" >Állítsa be az egyszerűbb adatbevitelhez!</label>
+        </div>
+    </div>
+    <div style="width: 610px; height: 250px; float: left">
+    <div><label style="display: none; font-size: 25px; font-weight: bold; text-decoration: underline; float: left">Utasítás: </label></div>
+    <br>
+    <label id="labello" style="display: none; font-style: italic; color: blue; font-size: 20px"></label>
+    <label style="font-size: 25px; font-weight: bold; text-decoration: underline">Felismert szöveg:</label> <br>
+    <p id="kiiratasID" style="line-height: 18px; font-size: 18px"></p>
+    </div>
+
+</div>
+
+
+<script>
+    let index="altalanos";
+    let gyurugyorsit=true;
+    let adatbeviteleng=true;
+    function indexvalt(melyik){
+        index=melyik;
+        document.getElementById(melyik).style.borderColor="blue";
+        document.getElementById(melyik).style.color="blue";
+        if (melyik==="altalanos"){
+            document.getElementById('visszafogas').style.borderColor="#c2c2c2";
+            document.getElementById('visszafogas').style.color="grey";
+
+        }
+        else{
+            document.getElementById("altalanos").style.borderColor="#c2c2c2";
+            document.getElementById("altalanos").style.color="grey";
+
+        }
+    }
+    indexvalt(index);
+    let felh=localStorage.getItem("felhasznalonev");
+    if(felh!=='')
+    {
+        document.getElementById("bejgli").textContent = felh;
+        document.getElementById("bejkep").style.border="0px";
+    }
+    else
+    {
+        document.getElementById("bejgli").textContent = "";
+        document.getElementById("bejkep").style.border="2px solid black";
+    }
+    function kiemel(id,szin) {
+        document.getElementById(id).style.color=szin;
+    }
+    function visszaemel(id,szin) {
+        document.getElementById(id).style.color=szin;
+
+    }
+    function kiemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+    }
+    function visszaemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+
+    }
+    let utasitas="Most viheti be az adatokat beszédfelismeréssel.";
+    let ujgyuru=true;
+
+    let adatkiolvas=[];
+    let adatkiolvasnyers="";
+    let nyersadat=[];
+    let adatmentkezd=0;
+    let adatmentveg=0;
+    let a;
+    let b;
+    let adatbevitelx=false;
+    let recognition;
+    let gyuru;
+    let faj="";
+    let nem="";
+    let kor="";
+    let zsir="";
+    let izom="";
+    let vedles="";
+    let tomeg="";
+    let elsoevezo="";
+    let megjegyzes="";
+    let aktadattipus;
+    let aktinput = document.getElementById('gyurutbox');
+    let szamlalo=0;
+    let ellenorzesx=false;
+    let ellenorzes="";
+    let hely;
+    let gyuruzo;
+    hely= localStorage.getItem("helykp");
+    document.getElementById("helykpbox").value=hely;
+    let kiolvas="";
+
+    if (felh!=='')
+    {
+        beszedfelismeres();
+        document.getElementById("gyuruzobox").value=localStorage.getItem('nev');
+    }
+    else {/*
+        document.getElementById("adatbevitel").disabled=true;
+        document.getElementById("adatbevitel").style.borderColor="grey";
+        document.getElementById("adattorles").disabled=true;
+        document.getElementById("adattorles").style.backgroundColor="grey";
+        document.getElementById("torol").disabled=true;
+        document.getElementById("torol").style.backgroundColor="grey";
+        document.getElementById("vissza").disabled=true;
+        document.getElementById("vissza").style.backgroundColor="grey";
+        document.getElementById("frissites").disabled=true;
+        document.getElementById("frissites").style.backgroundColor="grey";
+        document.getElementById("labello").style.fontSize="30px";
+        document.getElementById("labello").style.color="red";
+        document.getElementById("labello").style.textDecoration="underline";
+        document.getElementById("labello").style.lineHeight="35px";
+
+        document.getElementById("gyurutbox").disabled=true;
+        document.getElementById("fajbox").disabled=true;
+        document.getElementById("nembox").disabled=true;
+        document.getElementById("korbox").disabled=true;
+        document.getElementById("elsoevezobox").disabled=true;
+        document.getElementById("tomegbox").disabled=true;
+        document.getElementById("zsirbox").disabled=true;
+        document.getElementById("izombox").disabled=true;
+        document.getElementById("megjegyzesbox").disabled=true;
+        document.getElementById("vedlesbox").disabled=true;
+        document.getElementById("helykpbox").disabled=true;
+        localStorage.clear();*/
+        kiiras("Nincs bejelentkezve, így nem fog tudni adatot bevinni. Jelentkezzen be az adatbevitelhez!", "#ffded4", "7px solid red", 999999);
+            utasitas="Nincs bejelentkezve, így nem fog tudni adatot bevinni. Jelentkezzen be az adatbevitelhez!";
+            document.getElementById("helykpbox").value="";
+        document.getElementById("gyuruzobox").disabled=true;
+        document.getElementById("labello").textContent=utasitas;
+    }
+    gyuruzo=document.getElementById("gyuruzobox").value;
+
+
+    //**********ESEMÉNYKEZELŐ, ÉS ADATBEVITELI FÜGGÉNYEK***********************************************************
+
+    function beszedfelismeres(){
+        document.getElementById("labello").textContent=utasitas;
+
+
+        document.getElementById("labello").style.color="blue";
+
+        document.getElementById('kiiratasID').innerText= "Beszédfelismerés...";
+
+        recognition = new webkitSpeechRecognition(); //deklarálás
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.onresult = function (event) { //eseménykezelő
+            let eredmeny="";
+            for (let i = 0; i < event.results.length; i++) {
+                eredmeny = event.results[i][0].transcript + ' '; //felismert szöveg kiolvasása
+                adatkiolvasnyers += eredmeny;
+            }
+            document.getElementById('kiiratasID').textContent = adatkiolvasnyers;  //szöveg megjelenítése
+            adatkiolvas = adatkiolvasnyers.split(' ');  //hozzáfűzés a tömbhöz
+            adatkiolvasnyers = "";
+                adatellenorzes(); //szövegelemző függvény
+        }
+        recognition.start();  //beszédfelismerés elindítása
+    }
+    function adatellenorzes() {
+        let ii = adatkiolvas.length-1;
+        //ellenorzesx=false;
+        //ellenorzes="";
+        for (let i = adatmentkezd; i < ii; i++) {
+            a = adatkiolvas[i];
+            if (a==="törlés" || a==="töröl" || a==="újra" || a==="frissítés")
+            {
+                recognition.stop();
+                nyersadat.length = 0;
+                adatmentkezd = 0;
+                adatmentveg = 0;
+                adatbevitelx = false;
+                aktadattipus = "";
+                adatkiolvasnyers = "";
+                aktinput.style.borderWidth = '1px';
+                aktinput.style.borderColor = "black";
+                beszedfelismeres();
+                break;
+            }
+            else if (a==="visszafogas" || a==="visszafogás")
+            {
+                recognition.stop();
+                indexvalt("visszafogas");
+                beszedfelismeres();
+            }
+            else if (a==="új")
+            {
+                if (i+1<ii)
+                {
+                    if (adatkiolvas[i+1]==="gyűrű")
+                    {
+                        recognition.stop();
+                        indexvalt("altalanos");
+                        beszedfelismeres();
+                    }
+                }
+            }
+            else if (a==="újgyűrű")
+            {
+                recognition.stop();
+                indexvalt("altalanos");
+                beszedfelismeres();
+            }
+
+                if (a==="adatbevitel" || a==="adatmentés" || a==="adatbevétel")
+                {
+                    adatbevitelellenorzes();
+                    ellenorzes="adatbevitel";
+                    ellenorzesx=true;
+                }
+                else if (a==="adattörlés" || a==="adaktörlés" || a==="adaptörlés" ||a==="adattöröl" || a==="adaptöröl")
+                {
+                    ellenorzes="adattorles";
+                    ellenorzesx=true;
+                }
+                else if (a==="vissza" || a==="ww" || a==="ww" ||a==="ww" || a==="ww")
+                {
+                    ellenorzes="vissza";
+                    ellenorzesx=true;
+                }
+                else if (ellenorzesx && (a==="tovább" || a==="igen"))
+                {
+                    recognition.stop();
+                    nyersadat.length = 0;
+                    adatmentkezd = 0;
+                    adatmentveg = 0;
+                    adatbevitelx = false;
+                    aktadattipus = "";
+                    ellenorzesx=false;
+                    switch (ellenorzes)
+                    {
+                        case "adatbevitel":
+                            adatbevitelajax();
+                            break;
+                        case "adattorles":
+                            adattorles();
+                            break;
+                        case "vissza":
+                            adatvisszatoltes();
+                            break;
+                        default:
+                            alert('Hiba az adatfeldolgozás közben!');break;
+                    }
+                    ellenorzes="";
+                    document.getElementById("felugroablak").style.display="none";
+                    break;
+            }
+            else if (ellenorzesx && (a==="mégsem" || a==="mégse" || a==="nem")){
+                ellenorzes="";
+                ellenorzesx=false;
+                recognition.stop();
+                adatbevitelmegsem();
+            }
+            else if (adatbevitelx && a === "tovább") {
+                recognition.stop();
+                adatmentveg = i;
+                adatbevitelx = false;
+                ii=0;
+                i=1000;
+                adatszetbont();
+                szamlalo++;
+                break;
+            }
+            else if (a === "gyűrű" || a === "fajta" || a === "nem" || a === "kor" || a === "zsír" || a === "izom" || a === "vedlés" || a === "tömeg" || a === "evező" || a === "megjegyzés" || a === "core" || a === "akkor" || a === "mikor" || a === "kora" || a === "gyűrűk" || a === "vedelés" || a === "elsőevező" || a === "azonosító" || a === "faj" || a === "madárfaj" || a === "adatmentés") {
+                adatmentkezd = i + 1;
+                adatbevitelx = true;
+
+                if (szamlalo > 0) {
+                    aktinput.style.borderWidth = '1px';
+                }
+                switch (a) {
+                    case "core":
+                        aktadattipus = "kor";
+                        break;
+                    case "kora":
+                        aktadattipus = "kor";
+                        break;
+                    case "gyűrűk":
+                        aktadattipus = "gyűrű";
+                        break;
+                    case "vedelés":
+                        aktadattipus = "vedlés";
+                        break;
+                    case "elsőevező":
+                        aktadattipus = "elsoevezo";
+                        break;
+                    case "faj":
+                        aktadattipus = "fajta";
+                        break;
+                    case "evező":
+                        aktadattipus = "elsoevezo";
+                        break;
+                    case "azonosító":
+                        aktadattipus = "gyűrű";
+                        break;
+                    default:
+                        aktadattipus = a;
+                        break;
+                } switch (aktadattipus) {
+                    case "gyűrű":
+                        aktinput = document.getElementById('gyurutbox');
+                        break;
+                    case "fajta":
+                        aktinput = document.getElementById('fajbox');
+                        break;
+                    case "nem":
+                        aktinput = document.getElementById('nembox');
+                        break;
+                    case "kor":
+                        aktinput = document.getElementById('korbox');
+                        break;
+                    case "zsír":
+                        aktinput = document.getElementById('zsirbox');
+                        break;
+                    case "izom":
+                        aktinput = document.getElementById('izombox');
+                        break;
+                    case "vedlés":
+                        aktinput = document.getElementById('vedlesbox');
+                        break;
+                    case "megjegyzés":
+                        aktinput = document.getElementById('megjegyzesbox');
+                        break;
+                    case "tömeg":
+                        aktinput = document.getElementById('tomegbox');
+                        break;
+                    case "elsoevezo":
+                        aktinput = document.getElementById('elsoevezobox');
+                        break;
+                }
+                bevitelimezokvizzaallit();
+                aktinput.style.borderWidth = '3px';
+                aktinput.style.borderColor = "blue";
+            }
+        }
+    }
+    function adatszetbont() {
+        document.getElementById('kiiratasID').textContent = "Adatmentés, az beszédfelismerés ideiglenesen leállt...";
+        for (let i = adatmentkezd; i < adatmentveg; i++) {
+            nyersadat.push(adatkiolvas[i]);
+        }
+        switch (aktadattipus) {
+            case "gyűrű":
+                gyurubevitel();
+                break;
+            case "fajta":
+                fajbevitel();
+                break;
+            case "nem":
+                nembevitel();
+                break;
+            case "kor":
+                korbevitel();
+                break;
+            case "zsír":
+                zsirbevitel();
+                break;
+            case "izom":
+                izombevitel();
+                break;
+            case "vedlés":
+                vedlesbevitel();
+                break;
+            case "megjegyzés":
+                megjegyzesbevitel();
+                break;
+            case "tömeg":
+                tomegbevitel();
+                break;
+            case "elsoevezo":
+                elsoevezobevitel();
+                break;
+        }
+        nyersadat.length = 0;
+        adatmentkezd = 0;
+        adatmentveg = 0;
+        adatbevitelx = false;
+        aktadattipus = "";
+        bevitelimezokvizzaallit();
+        beszedfelismeres();
+    }
+    function adattorles(){
+        localStorage.setItem("gyuru",gyuru);
+        localStorage.setItem("faj",faj);
+        localStorage.setItem("nem",nem);
+        localStorage.setItem("kor",kor);
+        localStorage.setItem("tomeg",tomeg);
+        localStorage.setItem("elsoevezo",elsoevezo);
+        localStorage.setItem("zsir",zsir);
+        localStorage.setItem("izom",izom);
+        localStorage.setItem("vedles",vedles);
+        localStorage.setItem("megjegyzes",megjegyzes);
+        gyuru="";
+        faj="";
+        kor="";
+        nem="";
+        tomeg="";
+        elsoevezo="";
+        zsir="";
+        izom="";
+        vedles="";
+        megjegyzes="";
+        bevitelimezokvizzaallit();
+            nyersadat.length = 0;
+            adatmentkezd = 0;
+            adatmentveg = 0;
+            adatbevitelx = false;
+            aktadattipus = "";
+        beszedfelismeres();
+
+    }
+    function bevitelimezokvizzaallit(){
+
+        document.getElementById('gyurutbox').style.borderColor="#BAD1CD";
+        document.getElementById('gyurutbox').style.borderWidth="1px";
+        document.getElementById('gyurutbox').value=gyuru;
+
+        document.getElementById('fajbox').style.borderColor="#BAD1CD";
+        document.getElementById('fajbox').style.borderWidth="1px";
+        document.getElementById('fajbox').value=faj;
+
+        document.getElementById('korbox').style.borderColor="#BAD1CD";
+        document.getElementById('korbox').style.borderWidth="1px";
+        document.getElementById('korbox').value=kor;
+
+        document.getElementById('nembox').style.borderColor="#BAD1CD";
+        document.getElementById('nembox').style.borderWidth="1px";
+        document.getElementById('nembox').value=nem;
+
+        document.getElementById('tomegbox').style.borderColor="#BAD1CD";
+        document.getElementById('tomegbox').style.borderWidth="1px";
+        document.getElementById('tomegbox').value=tomeg;
+
+        document.getElementById('elsoevezobox').style.borderColor="#BAD1CD";
+        document.getElementById('elsoevezobox').style.borderWidth="1px";
+        document.getElementById('elsoevezobox').value=elsoevezo;
+
+        document.getElementById('zsirbox').style.borderColor="#BAD1CD";
+        document.getElementById('zsirbox').style.borderWidth="1px";
+        document.getElementById('zsirbox').value=zsir;
+
+        document.getElementById('izombox').style.borderColor="#BAD1CD";
+        document.getElementById('izombox').style.borderWidth="1px";
+        document.getElementById('izombox').value=izom;
+
+        document.getElementById('vedlesbox').style.borderColor="#BAD1CD";
+        document.getElementById('vedlesbox').style.borderWidth="1px";
+        document.getElementById('vedlesbox').value=vedles;
+
+        document.getElementById('megjegyzesbox').style.borderColor="#BAD1CD";
+        document.getElementById('megjegyzesbox').style.borderWidth="1px";
+        document.getElementById('megjegyzesbox').value=megjegyzes;
+
+    }
+    function adatvisszatoltes(){
+        gyuru=localStorage.getItem("gyuru");
+        faj=localStorage.getItem("faj");
+        nem=localStorage.getItem("nem");
+        kor=localStorage.getItem("kor");
+        tomeg=localStorage.getItem("tomeg");
+        elsoevezo=localStorage.getItem("elsoevezo");
+        zsir=localStorage.getItem("zsir");
+        izom=localStorage.getItem("izom");
+        vedles=localStorage.getItem("vedles");
+        megjegyzes=localStorage.getItem("megjegyzes");
+        bevitelimezokvizzaallit();
+        beszedfelismeres();
+
+    }
+    function gyurubevitel() {
+        gyuru = "";
+        nyersadat.push("o");
+        for (let i=0;i<nyersadat.length;i++) {
+            if ((nyersadat[i] === "3" && nyersadat[i + 1][0] === "x") || ((nyersadat[i].substring(0, 5) === "három") && nyersadat[i + 1][0] === "x") || nyersadat[i].substring(0, 2) === "3x" || nyersadat[i].substring(0, 6) === "háromx"){
+                gyuru = "3X";
+                nyersadat[i]="x" + nyersadat[i].slice(1);
+            } else if ((nyersadat[i] === "b" && nyersadat[i + 1][0] === "b") || nyersadat[i].substring(0, 2) === "bb") {
+                gyuru = "BB";
+            }
+            else {
+                switch (nyersadat[i][0]) {
+                    case "a":
+                        gyuru = "A"
+                        break;
+                    case "b":
+                        gyuru = "B";
+                        break;
+                    case "c":
+                        gyuru = "C";
+                        break;
+                    case "d":
+                        gyuru = "D";
+                        break;
+                    case "g":
+                        gyuru = "G";
+                        break;
+                    case "t":
+                        gyuru = "T";
+                        break;
+                }
+            }
+
+            if (gyuru !== "") {
+                nyersadat.splice(0, i);
+                break;
+            }
+        }
+        let kovetkezo=false;
+        for (let qw=0;qw<nyersadat.length;qw++)
+        {
+            if (nyersadat[qw]==="következő"){
+                kovetkezo=true;
+            }
+        }
+        if (kovetkezo)
+        {
+            if (gyuru!=="") {
+                if (gyurugyorsit)
+                {
+                    gyurugyorsit=false;
+                    let szamstring = localStorage.getItem("G"+gyuru);
+                    let szamint=parseInt(szamstring);
+                    szamstring="";
+                    localStorage.setItem("G"+gyuru, szamint+1);
+                    /*for (q=0;q<szamstring.length-(szamint/10+1);q++)
+                    {
+                        szamstring+="0";
+                    }*/
+                    gyuru+=szamint;
+                }
+                else
+                {
+                    gyurugyorsit=true;
+                    let szamstring = localStorage.getItem("G"+gyuru);
+                    gyuru+=szamstring;
+                }
+
+            }
+        }
+        else
+        {
+            if (gyuru!=="") {
+                szamatalakit(false);
+                for (let i = 0; i < nyersadat.length; i++) {
+                    gyuru += nyersadat[i];
+                }
+            }
+        }
+
+        if (gyuru.length===0)
+        {gyuru="hiba";}
+        document.getElementById('gyurutbox').value = gyuru;
+    }
+    function fajbevitel() {
+        faj="";
+        let nyersadatmasolat=[];
+        let kod=false;
+        let kezd=0;
+        faj=nyersadat[0];
+        for (let w=0;w<nyersadat.length;w++)
+        {
+            if (nyersadat[w]==="kód")
+            {
+                kod=true;
+                kezd=w+1;
+                break;
+            }
+        }
+        if (kod)
+        {
+            for (let w=kezd; w<nyersadat.length;w++)
+            {
+                nyersadatmasolat.push(nyersadat[w]);
+            }
+            //nyersadat=nyersadatmasolat;
+            szamatalakit(false);
+            if (nyersadat.length>0)
+            {
+                faj=localStorage.getItem("f"+nyersadat[0]);
+            }
+            else if (nyersadatmasolat.length>5)
+                {
+                    faj="["+nyersadatmasolat[0][0]+nyersadatmasolat[1][0]+nyersadatmasolat[2][0]+nyersadatmasolat[3][0]+nyersadatmasolat[4][0]+nyersadatmasolat[5][0]+"]";
+                }
+            }
+        else {
+            for (let j=1;j<nyersadat.length;j++)
+            {
+                faj+=' '
+                faj+=nyersadat[j];
+            }
+        }
+        document.getElementById('fajbox').value = faj;
+    }
+    function nembevitel(){
+        nem = "hiba";
+        for (let i = 0; i < nyersadat.length; i++) {
+            nem = nyersadat[i];
+            if (nem === "hím" || nem === "him" || nem === "tojó" || nem === "ismeretlen")
+            {
+
+                if (nem === "him")
+                {
+                    nem = "hím";
+                }
+                if (nem === "ismeretlen")
+                {
+                    nem = "?";
+                }
+                break;
+            }
+            else
+            {
+                nem="hiba";
+            }
+        }
+        document.getElementById('nembox').value = nem;
+    }
+    function korbevitel(){
+
+        kor = "hiba";
+        for (let j = 0; j < nyersadat.length; j++) {
+
+            switch (nyersadat[j])
+            {
+                case "röpképtelen":
+                    kor="R";
+                    break;
+                case "első":
+                    kor="1Y";
+                    break;
+                case "1":
+                    kor="1Y";
+                    break;
+                case "adult":
+                    kor="1+";
+                    break;
+                case "fejlett":
+                    kor="F";
+                    break;
+            }
+        }
+        document.getElementById('korbox').value = kor;
+    }
+    function zsirbevitel()
+    {
+        zsir="hiba";
+        szamatalakit(false);
+        if (nyersadat.length>0)
+            zsir=nyersadat[0];
+        document.getElementById('zsirbox').value = zsir;
+    }
+    function izombevitel()
+    {
+        izom="hiba";
+        szamatalakit(false);
+        if (nyersadat.length!==0)
+            izom=nyersadat[0];
+        document.getElementById('izombox').value = izom;
+    }
+    function vedlesbevitel()
+    {
+        vedles="hiba";
+        szamatalakit(false);
+        if (nyersadat.length!==0)
+            vedles=nyersadat[0];
+        document.getElementById('vedlesbox').value = vedles;
+    }
+    function tomegbevitel()
+    {
+        tomeg="hiba";
+        szamatalakit(true);
+        if (nyersadat.length!==0)
+            tomeg=nyersadat[0];
+        document.getElementById('tomegbox').value = tomeg;
+    }
+    function elsoevezobevitel()
+    {
+        elsoevezo="hiba";
+        szamatalakit(true);
+        if (nyersadat.length!==0)
+            elsoevezo=nyersadat[0];
+        document.getElementById('elsoevezobox').value = elsoevezo;
+    }
+    function megjegyzesbevitel() {
+        megjegyzes=nyersadat[0];
+        for (let j=1;j<nyersadat.length;j++)
+        {
+            megjegyzes+=' '
+            megjegyzes+=nyersadat[j];
+        }
+        document.getElementById('megjegyzesbox').value = megjegyzes;
+    }
+    function szamatalakit(tizedes) {
+
+        let s=[];
+        let adatszetbont="";
+        adatszetbont+=nyersadat[0];
+        for (let j=1;j<nyersadat.length;j++)
+        {adatszetbont+=";"
+            adatszetbont+=nyersadat[j];
+        }
+        nyersadat.length=0;
+        if (tizedes)
+            nyersadat=adatszetbont.split(/[-;:]/);
+        else
+            nyersadat=adatszetbont.split(/[-.;,:]/);
+
+        for (let i = 0; i < nyersadat.length; i++) {
+            switch (nyersadat[i]) {
+                case "nulla":
+                    nyersadat[i] = "0";
+                    break;
+                case "egy":
+                    nyersadat[i] = "1";
+                    break;
+                case "kettő":
+                    nyersadat[i] = "2";
+                    break;
+                case "három":
+                    nyersadat[i] = "3";
+                    break;
+                case "négy":
+                    nyersadat[i] = "4";
+                    break;
+                case "öt":
+                    nyersadat[i] = "5";
+                    break;
+                case "hat":
+                    nyersadat[i] = "6";
+                    break;
+                case "hét":
+                    nyersadat[i] = "7";
+                    break;
+                case "nyolc":
+                    nyersadat[i] = "8";
+                    break;
+                case "kilenc":
+                    nyersadat[i] = "9";
+                    break;
+                case "egész":
+                    if (tizedes)
+                    {
+                        nyersadat[i]=",";
+                    }
+                    break;
+                case ",":
+                    if (tizedes)
+                    {
+                        nyersadat[i]=",";
+                    }
+                    break;
+                default:
+                    s=nyersadat[i].split('');
+
+                    nyersadat.splice(i,1);
+                    for (let j=0;j<s.length;j++)
+                    {
+                        if (szamellenoriz(s[j])||s[j]===",")
+                        {
+                            nyersadat.splice(i,0,s[j]);
+                            i++;
+                        }
+                    }
+                    i--;
+                    break;
+            }
+        }
+        if (tizedes) {
+            let i;
+            let egyben = "";
+            let szam = "";
+            for (i = 0; i < nyersadat.length; i++)
+                egyben += nyersadat[i];
+            for (i = 0; i < egyben.length; i++) {
+                if (szamellenoriz(egyben[i])) {
+                    szam += egyben[i];
+                } else if (egyben[i] === ",") {
+                    szam += ",";
+                    for (i = i + 1; i < egyben.length; i++) {
+                        if (szamellenoriz(egyben[i])) {
+                            szam += egyben[i];
+                            i = egyben.length;
+                            break;
+                        }
+                    }
+                }
+            }
+            nyersadat.length = 0;
+            nyersadat.push(szam);
+        }
+    }
+    function szamellenoriz(be){
+        let ki=false;
+        if (!isNaN(parseInt(be, 10))){
+            ki=true;
+        }
+        return ki;
+    }
+    //**********ADATBEVITELI FÜGGÉNYEK***********************************************************
+    function gyorsitmegj(){
+        recognition.stop();
+        document.getElementById("gyorsito").style.display="block";
+        document.getElementById("GA").value=localStorage.getItem("GA");
+        document.getElementById("GB").value=localStorage.getItem("GB");
+        document.getElementById("GBB").value=localStorage.getItem("GBB");
+        document.getElementById("GD").value=localStorage.getItem("GD");
+        document.getElementById("GG").value=localStorage.getItem("GG");
+        document.getElementById("G3X").value=localStorage.getItem("G3X");
+        document.getElementById("f1").value=localStorage.getItem("f1");
+        document.getElementById("f2").value=localStorage.getItem("f2");
+        document.getElementById("f3").value=localStorage.getItem("f3");
+        document.getElementById("f4").value=localStorage.getItem("f4");
+        document.getElementById("f5").value=localStorage.getItem("f5");
+        document.getElementById("f6").value=localStorage.getItem("f6");
+        document.getElementById("f7").value=localStorage.getItem("f7");
+        document.getElementById("f8").value=localStorage.getItem("f8");
+        document.getElementById("f9").value=localStorage.getItem("f9");
+        document.getElementById("f10").value=localStorage.getItem("f10");
+
+    }
+    function gyorsitmegsem(){
+        document.getElementById("gyorsito").style.display="none";
+        beszedfelismeres();
+    }
+    function gyorsitment(){
+        localStorage.setItem("GA", document.getElementById("GA").value);
+        localStorage.setItem("GB", document.getElementById("GB").value);
+        localStorage.setItem("GBB", document.getElementById("GBB").value);
+        localStorage.setItem("GD", document.getElementById("GD").value);
+        localStorage.setItem("GG", document.getElementById("GG").value);
+        localStorage.setItem("G3X", document.getElementById("G3X").value);
+        localStorage.setItem("f1", document.getElementById("f1").value);
+        localStorage.setItem("f2", document.getElementById("f2").value);
+        localStorage.setItem("f3", document.getElementById("f3").value);
+        localStorage.setItem("f4", document.getElementById("f4").value);
+        localStorage.setItem("f5", document.getElementById("f5").value);
+        localStorage.setItem("f6", document.getElementById("f6").value);
+        localStorage.setItem("f7", document.getElementById("f7").value);
+        localStorage.setItem("f8", document.getElementById("f8").value);
+        localStorage.setItem("f9", document.getElementById("f9").value);
+        localStorage.setItem("f10", document.getElementById("f10").value);
+        document.getElementById("gyorsito").style.display="none";
+        alert("A gyorsítóadatok módosítva!");
+        beszedfelismeres();
+    }
+    function adatbevitelellenorzesakt(){
+        adatbevitelellenorzes();
+        adatbeviteleng=true;
+
+    }
+    function adatbevitelellenorzes(){
+        document.getElementById("felugroablak").style.display="block";
+        document.getElementById("gyurue").textContent=document.getElementById("gyurutbox").value;
+        //document.getElementById("date").textContent=document.getElementById("").value;
+        //document.getElementById("idoe").textContent=document.getElementById("").value;
+        document.getElementById("helye").textContent=document.getElementById("helykpbox").value;
+        document.getElementById("faje").textContent=document.getElementById("fajbox").value;
+        document.getElementById("neme").textContent=document.getElementById("nembox").value;
+        document.getElementById("kore").textContent=document.getElementById("korbox").value;
+        document.getElementById("elsoevezoe").textContent=document.getElementById("elsoevezobox").value;
+        document.getElementById("tomege").textContent=document.getElementById("tomegbox").value;
+        document.getElementById("zsire").textContent=document.getElementById("zsirbox").value;
+        document.getElementById("izome").textContent=document.getElementById("izombox").value;
+        document.getElementById("vedlese").textContent=document.getElementById("vedlesbox").value;
+        document.getElementById("megjegyzese").textContent=document.getElementById("megjegyzesbox").value;
+        ellenorzes="adatbevitel";
+        ellenorzesx=true;
+
+    }
+    function adatbevitelmegsem(){
+        ellenorzes="";
+        ellenorzesx=false;
+        document.getElementById("felugroablak").style.display="none";
+        beszedfelismeres();
+    }
+    function adatbevitelajax() {
+        ellenorzes="";
+        ellenorzesx=false;
+        if (document.getElementById("korbox").value === "" || document.getElementById("korbox").value === "hiba")
+            document.getElementById("korbox").value = "F";
+        if (document.getElementById("nembox").value === "" || document.getElementById("nembox").value === "hiba")
+            document.getElementById("nembox").value = "?";
+        hely = document.getElementById("helykpbox").value;
+        localStorage.setItem("gyuru", document.getElementById("gyurutbox").value);
+        localStorage.setItem("faj", document.getElementById("fajbox").value);
+        localStorage.setItem("nem", document.getElementById("nembox").value);
+        localStorage.setItem("kor", document.getElementById("korbox").value);
+        localStorage.setItem("tomeg", document.getElementById("tomegbox").value);
+        localStorage.setItem("elsoevezo", document.getElementById("elsoevezobox").value);
+        localStorage.setItem("zsir", document.getElementById("zsirbox").value);
+        localStorage.setItem("izom", document.getElementById("izombox").value);
+        localStorage.setItem("vedles", document.getElementById("vedlesbox").value);
+        localStorage.setItem("megjegyzes", document.getElementById("megjegyzesbox").value);
+        localStorage.setItem("helykp", document.getElementById("helykpbox").value);
+        if (!ujgyuru) {
+            let seged = document.getElementById("megjegyzesbox").value;
+            document.getElementById("megjegyzesbox").value = "(*vf#)" + seged;
+        }
+        let adatok="index=" + index + "&gyurutbox=" + document.getElementById("gyurutbox").value + "&fajbox=" + document.getElementById("fajbox").value + "&nembox=" + document.getElementById("nembox").value + "&korbox=" + document.getElementById("korbox").value + "&megjegyzesbox=" + document.getElementById("megjegyzesbox").value + "&tomegbox=" + document.getElementById("tomegbox").value + "&elsoevezobox=" + document.getElementById("elsoevezobox").value + "&zsirbox=" + document.getElementById("zsirbox").value + "&izombox=" + document.getElementById("izombox").value + "&vedlesbox=" + document.getElementById("vedlesbox").value + "&helykpbox=" + document.getElementById("helykpbox").value + "&gyuruzobox=" + document.getElementById("gyuruzobox").value;
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+            if(xhr.status===200)
+            {
+                const results= JSON.parse(xhr.responseText);
+                if (adatbeviteleng){
+                    adatbeviteleng=false;
+                    if (results){
+                        kiiras("Sikeres adatbevitel!","lightgreen", "5px solid green", 3000);
+                        adattorles();
+                    }
+                    else
+                        kiiras("Hiba az adatbevitel közben!","#ffded4", "5px solid red", 3000);
+                }
+                else
+                {
+                    adatbeviteleng=true;
+                }
+
+            }
+        }
+        xhr.open("GET", "adatmentesphp.php?"+adatok);
+        xhr.send();
+        document.getElementById("felugroablak").style.display="none";
+        indexvalt("altalanos");
+        beszedfelismeres();
+
+    }
+    function helybevitelmegjelenit(){
+        recognition.stop();
+        document.getElementById("helybevisz").style.display="block";
+    }
+    function helybevitel(){
+        document.getElementById("helybevisz").style.display="none";
+        let adatok="helyazonosito=" + document.getElementById("helyazonosito").value +
+            "&elnevezes=" + document.getElementById("elnevezes").value +
+            "&orszag=" + document.getElementById("orszag").value +
+            "&telepules=" + document.getElementById("telepules").value +
+            "&Nkoordinata=" + document.getElementById("Nkoordinata").value +
+            "&Skoordinata=" + document.getElementById("Skoordinata").value +
+            "&letrehozas=" + document.getElementById("letrehozas").value +
+            "&tipus=" + document.getElementById("tipus").value +
+            "&gyuruzo=" + document.getElementById("gyuruzo").value +
+            "&elohely=" + document.getElementById("elohely").value +
+            "&halok=" + document.getElementById("halok").value +
+            "&leiras=" + document.getElementById("leiras").value;
+        const xhr= new XMLHttpRequest();
+        xhr.onload = function (){
+            if (xhr.status===200)
+            {
+                if(JSON.parse(xhr.responseText))
+                {
+                    document.getElementById("helykpbox").value=document.getElementById("helyazonosito").value;
+                    document.getElementById("helybevisz").style.display="none";
+
+                    alert("A gyűrűzőhely adatai sikeresen elmentve!");
+                    beszedfelismeres();
+                }
+                else
+                {
+                    alert("Hiba a gyűrűzőhely adatai elmentése közben!");
+                }
+            }
+            else
+            {
+                alert("Hiba történt az adatbázishoz való csatlakozás közben!");
+            }
+        }
+        xhr.open("GET", "helybevitel.php?"+adatok);
+        xhr.send();
+    }
+    function helybevitelmegsem(){
+        document.getElementById("helybevisz").style.display="none";
+        beszedfelismeres();
+    }
+    //**********EGYÉB FÜGGÉNYEK***********************************************************
+    function kiiras(szoveg,hatter,korvonal,ido)
+    {
+        document.getElementById("uzi").style.display="block";
+        let div = document.getElementById("uzi");
+        let h2 = document.getElementById("uzikiiratash2");
+        div.style.border=korvonal;
+        div.style.backgroundColor=hatter;
+        h2.textContent=szoveg;
+        setTimeout(function (){document.getElementById("uzi").style.display="none"},ido);
+    }
+</script>
+</body>
+</html>

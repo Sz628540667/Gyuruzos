@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Kezdőlap</title>
+    <link rel="stylesheet" href="dizajn.css">
+</head><!--
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Madárgyűrűzés</label>
+        <div style="float: right; display: flex; align-items: flex-start; margin-top: 2px">
+            <a href="bejelentkezes.html" id="bej" onmouseover="kiemel('bej','blue')" onmouseout="visszaemel('bej','black')" style="padding-right: 20px"><img id="bejkep" style="width: 40px; border-radius: 5px ;border: 2px solid black;padding-right: 2px; padding-bottom: 2px" src="bejelentkez+¬s.svg" alt=""></a>
+        </div>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')" style="padding-right: 30px">Kezdőlap</a>
+            <a href="adatbevitel.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" >Adatbevitel</a>
+            <a href="adatlistazas.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">Adatlistázás</a>
+            <a href="segitseg.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px">Segítség</a>
+            <label  style="font-size: 15px; margin-top: 8px" id="bejgli"></label>
+        </div>
+    </div>
+</header>-->
+<header >
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Madárgyűrűzés</label>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px" id="hedor">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')">Kezdőlap</a>
+            <a href="gyuruzofuzet.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">Gyűrűzőfüzet</a>
+            <a href="adatok.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" style="padding-left: 30px" >Összes adat</a>
+            <a href="feszkek.html"  id="adf" onmouseover="kiemel('adf','blue')" onmouseout="visszaemel('adf','black')" style="padding-left: 30px">Fészkek</a>
+            <a href="beallitasok.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px; ">Beállítások</a>
+        </div>
+    </div>
+</header>
+<body>
+    <div id="fiokhozzaadas" style="display: none; font-weight: bold; line-height: 15px; margin-top: 10%; background-color: white; width: 300px; margin-left: 37%; margin-right:40%; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 25px">
+        <label style="font-size: 20px; line-height: normal;">
+            A fiókot adminisztrátor hozza létre. <br> A kérvényt a következő e-mail címre küldje el: sz628540667@gmail.com <br> <br>
+        </label>
+        <button onclick="document.getElementById('fiokhozzaadas').style.display='none';" style="float: left; width: 100px; margin: 10px; border-color: blue; color: blue; padding: 5px" id="pluszadatok" onmouseover="kiemelbb('pluszadatok','blue');" onmouseout="visszaemelbb('pluszadatok','blue');">OK</button>
+        </div>
+    <div id="uzi" style="display: none;line-height: 40px; background-color: white; text-align: center; width: 600px;  margin-left: 28%; margin-right:40%; margin-top: 10%;; border: 2px solid black; border-radius: 30px; position: fixed;  z-index: 1; padding: 30px; font-size: 20px">
+        <h1 id="uzikiiratash2"></h1>
+    </div>
+    <div id="bejelentkezesdiv">
+        <div style="width: 100%;">
+            <div style="width: 27%; float: left; margin-left: 15%">
+                <img src="migratory-birds.jpg" alt="migratory-birds">
+            </div>
+            <div style="width: 30%; float: right; margin-right: 18%; margin-top: 4%">
+                <label class="hkiiras">Üdvözöljük itt újra!</label><br><br>
+
+                    <div class="bevitelicucc" style="font-weight: bold; line-height: 22px; border: 2px solid black; padding: 30px ;width: 70%">
+                        Felhasználónév:<br><input type="text" style="width: 94%" id="felhasznalonev"><br>
+                        <br>Jelszó:<br><input type="password" style="width: 94%" id="jelszo"><br><br>
+                        <div><button id="elfelejtettjelszbutton" onmouseover="kiemel('elfelejtettjelszbutton','blue')" onmouseout="visszaemel('elfelejtettjelszbutton','black')" style="font-size: 15px; color: black; border: none; margin: 0px; padding: 0px;"
+                            onclick="kiiras('Ez a funkció jelenleg nem elérhető!','lightblue', '5px solid blue', 3000)">Elfelejtetted a jelszavad?</button></div><br><br>
+                        <button style="width: 100%; height: 50px; border-color: blue; color: blue; padding: 5px" id="bejelentkezes" onmouseover="kiemelbb('bejelentkezes','blue');" onclick="bejelnetkez()" onmouseout="visszaemelbb('bejelentkezes','blue');">Bejelentkezés</button><br><br>
+                        <div style="width: 100%; text-align: center;"><button onclick="document.getElementById('fiokhozzaadas').style.display='block';" id="regisztralasbutton" onmouseover="kiemel('regisztralasbutton','blue')" onmouseout="visszaemel('regisztralasbutton','black')" style="font-size: 15px; color: black; border: none; margin: 0px; padding: 0px;">Fiók létrehozása</button></div>
+
+                    </div>
+        
+            </div>
+        </div>
+    </div>
+<div style="width: 100%; text-align: center;" id="kezdolap"><br>
+    <label id="felhasznalon" style="float: right; font-size: 18px; font-weight: bold; margin-right: 10px;"></label><br><br>
+    <button style="float: right; margin: 10px; margin-top: 0px; border-color: blue; color: blue; padding: 5px" id="kijelentkezes" onmouseover="kiemelbb('kijelentkezes','blue');" onmouseout="visszaemelbb('kijelentkezes','blue');"
+    onclick="localStorage.setItem('felhasznalonev',''); kezdes();" >Kijelentkezés</button><br>
+    <br><br><br><br><br><br><br><br>
+
+    <h1> Ez az oldal jelenleg nem elérhető!</h1>
+
+</div>
+    
+<!--<div style="margin: 7%; margin-top: 2%">
+    <div style="width: 50%; float: left">
+        <br><br><br><label class="hkiiras">Forradalmasítsa a madárgyűrűzést!</label><br><br>
+        <label style="font-size: 16px; line-height: 25px"> → Egyszerűsítse a munkáját! <br> → Takarítson meg időt! <br> → Bízza az adatkezelést az alkalmazásra!</label><br><br>
+
+        <div class="bekereteyettbox" style="width: 85%" onclick="adatbevitel()"  id="ab" onmouseover="kiemelb('ab', 'blue')" onmouseout="visszaemelb('ab','#F88532')">
+            <div style="float: left"><img src="microphone.svg" alt="" style="height: 50px"></div>
+            <label style="font-size: 25px; font-weight: bold" >Hangalapú adatbevitel </label><br>
+            <label style="font-size: 15px; color: #F88532" >Csak fel kell mondani a gyűrűzési adatokat, és a rendszer rögzíti.</label>
+        </div>
+        <br>
+        <div class="bekereteyettbox" style="width: 85%" id="al" onmouseover="kiemelb('al','blue')" onmouseout="visszaemelb('al','#F88532')" onclick="adatlistazas()">
+            <div style="float: left"><img src="pipa.svg" alt="" style="height: 50px"></div>
+            <label style="font-size: 25px; font-weight: bold" >Adatlistázás és exportálás</label><br>
+            <label style="font-size: 15px; color: #F88532" >Listázás feltételek mellett, eredménytáblázat exportálása, adatmódosítás.</label>
+        </div>
+
+    </div>
+
+    <div style="width: 50%; float: right">
+        <br><br><br><br><br>
+        <img src="bird-banding-data-entry-with-voice(1).jpg" alt="bird-banding-data-entry-with-voice">
+    </div>
+</div> -->
+</body>
+<script src="fuggvenyek.js"></script>
+<script>
+    
+    kezdes();
+    function kezdes(){
+        let felasznalonev=localStorage.getItem("felhasznalonev");
+        let nev=localStorage.getItem("nev");
+
+        if(felasznalonev==="")
+        {
+            document.getElementById("bejelentkezesdiv").style.display = "block";
+            document.getElementById("kezdolap").style.display = "none";
+            document.getElementById("hedor").style.display="none";
+        }
+        else
+        {
+            document.getElementById("bejelentkezesdiv").style.display = "none";
+            document.getElementById("kezdolap").style.display = "block";
+            document.getElementById("hedor").style.display="block";
+            document.getElementById("felhasznalon").textContent="Bejelentkezve: "+nev;
+
+        }
+    }
+    
+    function bejelnetkez(){
+        const xhr= new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let kiolvas = JSON.parse(xhr.responseText);
+                let seged = kiolvas.split(';');
+                let felhasznalonev=seged[0];
+                let nev = seged[1];
+                localStorage.setItem("felhasznalonev", felhasznalonev);
+                localStorage.setItem("nev",nev);
+                if (felhasznalonev!==''){
+                    kezdes();
+                    kiiras("Üdvözöljük a webalkalmazáson!","lightblue", "5px solid blue", 3000);
+
+                }
+                else
+                {
+                    kiiras("Hibás felhasználónév vagy jelszó!","#ffded4", "5px solid red", 3000);
+                }
+            }
+        }
+        xhr.open("GET", "bejelentkezes.php?felhasznalonev=" + document.getElementById("felhasznalonev").value + "&jelszo=" + document.getElementById("jelszo").value);
+        xhr.send();
+    }
+
+    if(felh!=='')
+    {
+        document.getElementById("bejgli").textContent = felh;
+        document.getElementById("bejkep").style.border="0px";
+    }
+    else
+    {
+        document.getElementById("bejgli").textContent = "";
+        document.getElementById("bejkep").style.border="2px solid black";
+    }
+    document.getElementById("hedor").style.display="none";
+    function kiemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+    }
+    function visszaemelb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+
+    }
+    function kiemelbb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+        document.getElementById(id).style.backgroundColor=szin;
+        document.getElementById(id).style.color="white";
+
+    }
+    function visszaemelbb(id,szin) {
+        document.getElementById(id).style.border="3px solid "+szin;
+        document.getElementById(id).style.backgroundColor="white";
+        document.getElementById(id).style.color=szin;
+
+    }
+    function kiiras(szoveg,hatter,korvonal,ido)
+    {
+        document.getElementById("uzi").style.display="block";
+        let div = document.getElementById("uzi");
+        let h2 = document.getElementById("uzikiiratash2");
+        div.style.border=korvonal;
+        div.style.backgroundColor=hatter;
+        h2.textContent=szoveg;
+        setTimeout(function (){document.getElementById("uzi").style.display="none"},ido);
+    }
+   
+</script>
+</body>
+</html>

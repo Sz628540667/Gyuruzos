@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Regisztráció</title>
+    <link rel="stylesheet" href="dizajn.css">
+</head>
+<body>
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Madárgyűrűzés</label>
+        <div style="float: right; display: flex; align-items: flex-start; margin-top: 2px">
+            <a href="bejelentkezes.html" id="bej" onmouseover="kiemel('bej','blue')" onmouseout="visszaemel('bej','black')" style="padding-right: 20px"><img id="bejkep" style="width: 40px; border-radius: 5px ;border: 2px solid black;padding-right: 2px; padding-bottom: 2px" src="bejelentkez+¬s.svg" alt=""></a>
+        </div>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')" style="padding-right: 30px">Kezdőlap</a>
+            <a href="adatbevitel.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" >Adatbevitel</a>
+            <a href="adatlistazas.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">Adatlistázás</a>
+            <a href="segitseg.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px">Segítség</a>
+            <label  style="font-size: 15px; margin-top: 8px" id="bejgli"></label>
+        </div>
+    </div>
+</header>
+
+    <div style="width: 27%; float: left; margin-left: 15%">
+        <img src="migratory-birds.jpg" alt="migratory-birds">
+    </div>
+    <div style="width: 50%; float: right; margin-top: 5%">
+        <label class="hkiiras">Üdvözöljük!</label><br><br>
+        <label>Már van fiókja? </label><a href="bejelentkezes.html" style="font-weight: bold; font-size: 15px; color: mediumblue; text-decoration: underline">Jelentkezzen be!</a>
+        <br><br><br>
+        <div class="bevitelicucc" style="font-weight: bold; line-height: 22px;width: 90%">
+
+            <div style="width: 50%; float: left">
+                Felhasználónév:<br><input type="text" size="30" id="felhsznalonev" name="felhsznalonev"><br>
+                Jelszó:<br><input type="password" size="30" id="jelszo" name="jelszo"><br>
+                Jelszó megerősítése:<br><input type="password" size="30" id="jelszomegint" name="jelszomegint"><br><br><br>
+                <button style="width: 90%"  onclick="regisztralas()">Regisztrálás</button>
+
+            </div>
+            <div style="width: 50%; float: right">
+                Vezetéknév:<br><input type="text" placeholder="" size="30" id="vezeteknev" name="vezeteknev"><br>
+                Utónév:<br><input type="text" size="30" id="utonev" name="utonev"><br>
+                Telefonszám:<br><input type="text" size="30" id="telefonszam" name="telefonszam"><br>
+                E-mail cím:<br><input type="text" size="30" id="emailcim" name="emailcim"><br><br>
+
+                <input type="checkbox" name="engedely" id="engedely" style="text-align: left; width: 12px"><label> Van gyűrűzési engedélyem</label>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="fuggvenyek.js"></script>
+    <script>
+        function regisztralas(){
+
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function (){
+                if (xhr.status===200)
+                {
+                    if (JSON.parse(xhr.responseText)===true)
+                    {
+                        alert("Sikeres regisztráció!");
+                        window.location.href="bejelentkezes.html";
+                    }
+                    else
+                    {
+                        alert("Hiba az adatbevitel során! Ellenőrizze a bevitt adatokat!");
+                    }
+                }
+                else
+                {
+                    alert("error: " + xhr.status + " - hiba az adatbázisshoz való csatlakozásnál!");
+                }
+            }
+
+            let adatok = "vezeteknev=" + document.getElementById("vezeteknev").value +
+                "&utonev=" + document.getElementById("utonev").value +
+                "&felhasznalonev=" + document.getElementById("felhsznalonev").value +
+                "&jelszo=" + document.getElementById("jelszo").value +
+                "&jelszomegint=" + document.getElementById("jelszomegint").value +
+                "&telefonszam=" + document.getElementById("telefonszam").value +
+                "&emailcim=" + document.getElementById("emailcim").value +
+                "&engedely=" + document.getElementById("engedely").checked;
+            xhr.open("GET", "regisztracio.php?" + adatok);
+            xhr.send();
+
+        }
+    </script>
+
+</body>
+</html>

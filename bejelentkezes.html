@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Bejelentkezes</title>
+    <link rel="stylesheet" href="dizajn.css">
+</head>
+<body>
+<header>
+    <div>
+        <label class="hkiiras" style="font-size: 35px">Madárgyűrűzés</label>
+        <div style="float: right; display: flex; align-items: flex-start; margin-top: 2px">
+            <a href="bejelentkezes.html" id="bej" onmouseover="kiemel('bej','blue')" onmouseout="visszaemel('bej','black')" style="padding-right: 20px"><img id="bejkep" style="width: 40px; border-radius: 5px ;border: 2px solid black;padding-right: 2px; padding-bottom: 2px" src="bejelentkez+¬s.svg" alt=""></a>
+        </div>
+        <div style="float: right; margin-right: 0; display: flex; align-items: flex-start; padding-top: 7px">
+            <a href="index.html" id="kez" onmouseover="kiemel('kez','blue')" onmouseout="visszaemel('kez','black')" style="padding-right: 30px">Kezdőlap</a>
+            <a href="adatbevitel.html" id="adb" onmouseover="kiemel('adb','blue')" onmouseout="visszaemel('adb','black')" >Adatbevitel</a>
+            <a href="adatlistazas.html"  id="adl" onmouseover="kiemel('adl','blue')" onmouseout="visszaemel('adl','black')" style="padding-left: 30px">Adatlistázás</a>
+            <a href="segitseg.html" id="s" onmouseover="kiemel('s','blue')" onmouseout="visszaemel('s','black')" style="padding-left: 30px; padding-right: 30px">Segítség</a>
+            <label  style="font-size: 15px; margin-top: 8px" id="bejgli"></label>
+        </div>
+    </div>
+</header>
+    <div style="width: 27%; float: left; margin-left: 15%">
+        <img src="migratory-birds.jpg" alt="migratory-birds">
+    </div>
+    <div style="width: 30%; float: right; margin-right: 18%; margin-top: 7%">
+        <label class="hkiiras">Üdvözöljük itt újra!</label><br><br>
+        <label>Még nincs fiókja? </label><a href="regisztracio.html" style="font-weight: bold; font-size: 15px; color: mediumblue; text-decoration: underline">Hozzon létre egyet!</a><br><br><br>
+            <div class="bevitelicucc" style="font-weight: bold; line-height: 22px;; width: 70%">
+                Felhasználónév:<br><input type="text" style="width: 94%" name="felhasznalonev" id="felhasznalonev" placeholder="Írja be a felhasználónevét!"><br>
+                <br>Jelszó:<br><input type="password" style="width: 94%" name="jelszo" id="jelszo" placeholder="Írja be a jelszavát!"><br><br><br><br>
+                <button type="submit" class="csecsegomb" style="width: 100%" onclick="bejelnetkez()" >Bejelentkezés</button>
+            </div>
+
+    </div>
+
+
+
+
+    <script src="fuggvenyek.js"></script>
+<script>
+    let felh=localStorage.getItem("felhasznalonev");
+    if(felh!=='')
+    {
+        document.getElementById("bejgli").textContent = felh;
+        document.getElementById("bejkep").style.border="0px";
+        localStorage.setItem("felhasznalonev","");
+        window.location.href="index.html";
+    }
+    else
+    {
+        document.getElementById("bejgli").textContent = "";
+        document.getElementById("bejkep").style.border="2px solid black";
+    }
+    function bejelnetkez(){
+        const xhr= new XMLHttpRequest();
+        xhr.onload = function(){
+            if (xhr.status===200)
+            {
+                let kiolvas = JSON.parse(xhr.responseText);
+                let seged = kiolvas.split(';');
+                let felhasznalonev=seged[0];
+                let nev = seged[1];
+                localStorage.setItem("felhasznalonev", felhasznalonev);
+                localStorage.setItem("nev",nev);
+                if (felhasznalonev!==''){
+                    alert("Sikeres bejelentkezes!");
+                    window.location.href="index.html";
+                }
+                else
+                {
+                    alert("Sikertelen bejelentkezes!");
+                }
+            }
+        }
+        xhr.open("GET", "bejelentkezes.php?felhasznalonev=" + document.getElementById("felhasznalonev").value + "&jelszo=" + document.getElementById("jelszo").value);
+        xhr.send();
+    }
+</script>
+</body>
+</html>

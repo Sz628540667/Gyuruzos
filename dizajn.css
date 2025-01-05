@@ -1,0 +1,115 @@
+header {
+    padding: 25px;
+    padding-left: 40px;
+    border-bottom: 3px solid #BAD1CD;
+    height: 42px;
+}
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+label {
+    color: black;
+    font-size: 15px;
+}
+
+h1{
+    font-size: 40px;
+    color: black;
+}
+.bekereteyettbox{
+    border: 3px solid #F88532;
+    color: black;
+    padding: 15px;
+    padding-left: 6px;
+    padding-bottom: 12px;
+    border-radius: 8px;
+    line-height: 25px;
+}
+.bekereteyettbox2{
+    border: 3px solid #F88532;
+    color: black;
+    background-color: transparent;
+    padding: 10px;
+    padding-bottom: 4px;
+    border-radius: 5px;
+    line-height: 18px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-size: cover; /* Az ablak teljes méretében kitölti a háttérképet */
+    background-position: top; /* A képet a középre igazítja */
+    background-repeat: no-repeat;
+    color: black;
+
+}
+input,textarea,select, option {
+    font-size: 18px;
+    padding: 9px;
+    right: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid #BAD1CD;
+}
+textarea{
+    font-size: 14px;
+    width: 220px;
+}
+input::placeholder{
+    font-size: 15px;
+}
+button {
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background: transparent;
+    /*border:3px solid #19647E;*/
+    border:3px solid blue;
+    border-radius: 8px;
+    font-weight: bold;
+    /*color: #19647E;*/
+    color: blue;
+
+}
+.csekkboksz{
+    padding: 30px;
+    
+}
+.hkiiras{
+    font-size: 50px;
+    font-weight: bold;
+}
+.bevitelicucc{
+    font-weight: bold;
+    line-height: 22px;
+}
+table{
+    font-size: 15px;
+    border-width: 3px;
+}
+
+.ellenorzoablak{
+    background-color: white;
+    width: 30%;
+    height: 77%;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-top: 2%;
+    border: 2px solid black;
+    border-radius: 30px;
+    position: fixed;
+    z-index: 1;
+}
+.ua{
+    font-size: 25px;
+}
